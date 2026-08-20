@@ -4,14 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Store, ShoppingCart, Package, BarChart3, 
-  Settings, Clock, UserCheck, HardDrive, ArrowLeft
+  Settings, Clock, UserCheck, ArrowLeft, LayoutDashboard
 } from 'lucide-react';
 import { usePos } from '../../context/PosStoreContext';
 import './PosNavbar.css';
 
 export interface PosNavbarProps {
-  activeView: 'register' | 'inventory' | 'reports' | 'settings';
-  setActiveView: (view: 'register' | 'inventory' | 'reports' | 'settings') => void;
+  activeView: 'dashboard' | 'register' | 'inventory' | 'reports' | 'settings';
+  setActiveView: (view: 'dashboard' | 'register' | 'inventory' | 'reports' | 'settings') => void;
 }
 
 export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView }) => {
@@ -50,11 +50,20 @@ export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView 
         <nav className="pos-view-tabs" aria-label="Menu Kasir">
           <button
             type="button"
+            className={`pos-tab-btn ${activeView === 'dashboard' ? 'is-active' : ''}`}
+            onClick={() => setActiveView('dashboard')}
+          >
+            <LayoutDashboard size={16} />
+            <span>Dashboard</span>
+          </button>
+
+          <button
+            type="button"
             className={`pos-tab-btn ${activeView === 'register' ? 'is-active' : ''}`}
             onClick={() => setActiveView('register')}
           >
             <ShoppingCart size={16} />
-            <span>Kasir Transaksi</span>
+            <span>Kasir</span>
             {totalCartCount > 0 && <span className="pos-cart-badge">{totalCartCount}</span>}
           </button>
 
@@ -64,7 +73,7 @@ export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView 
             onClick={() => setActiveView('inventory')}
           >
             <Package size={16} />
-            <span>Kelola Barang</span>
+            <span>Stok Barang</span>
           </button>
 
           <button
@@ -73,7 +82,7 @@ export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView 
             onClick={() => setActiveView('reports')}
           >
             <BarChart3 size={16} />
-            <span>Laporan & Shift</span>
+            <span>Laporan</span>
           </button>
 
           <button
@@ -82,7 +91,7 @@ export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView 
             onClick={() => setActiveView('settings')}
           >
             <Settings size={16} />
-            <span>Pengaturan Toko</span>
+            <span>Pengaturan</span>
           </button>
         </nav>
 

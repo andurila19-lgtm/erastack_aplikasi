@@ -1,10 +1,18 @@
 .pos-rep-root {
-  padding: var(--space-5);
+  padding: 16px;
+  padding-bottom: 80px;
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+}
+
+@media (min-width: 860px) {
+  .pos-rep-root {
+    padding: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
 }
 
 .rep-top-bar {

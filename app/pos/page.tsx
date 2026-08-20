@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PosProvider, usePos } from '../../src/context/PosStoreContext';
+import { PosProvider } from '../../src/context/PosStoreContext';
 import { PosNavbar } from '../../src/components/pos/PosNavbar';
+import { PosBottomNav } from '../../src/components/pos/PosBottomNav';
+import { PosDashboard } from '../../src/components/pos/PosDashboard';
 import { PosRegister } from '../../src/components/pos/PosRegister';
 import { PosInventory } from '../../src/components/pos/PosInventory';
 import { PosReports } from '../../src/components/pos/PosReports';
@@ -12,7 +14,7 @@ import { PosReceiptModal } from '../../src/components/pos/PosReceiptModal';
 import { TransactionRecord } from '../../src/data/posInitialData';
 
 const PosMainApp: React.FC = () => {
-  const [activeView, setActiveView] = useState<'register' | 'inventory' | 'reports' | 'settings'>('register');
+  const [activeView, setActiveView] = useState<'dashboard' | 'register' | 'inventory' | 'reports' | 'settings'>('dashboard');
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
   const [receiptTx, setReceiptTx] = useState<TransactionRecord | null>(null);
@@ -33,6 +35,9 @@ const PosMainApp: React.FC = () => {
       <PosNavbar activeView={activeView} setActiveView={setActiveView} />
 
       <main className="pos-app-content">
+        {activeView === 'dashboard' && (
+          <PosDashboard onNavigate={(view) => setActiveView(view)} />
+        )}
         {activeView === 'register' && (
           <PosRegister onOpenPayment={() => setIsPaymentOpen(true)} />
         )}
@@ -40,6 +45,8 @@ const PosMainApp: React.FC = () => {
         {activeView === 'reports' && <PosReports onReprint={handleReprint} />}
         {activeView === 'settings' && <PosSettings />}
       </main>
+
+      <PosBottomNav activeView={activeView} setActiveView={setActiveView} />
 
       <PosPaymentModal
         isOpen={isPaymentOpen}
