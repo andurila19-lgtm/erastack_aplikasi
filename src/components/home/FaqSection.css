@@ -1,0 +1,112 @@
+.faq-section {
+  padding: var(--space-10) 0;
+  background-color: #F8FAFC;
+}
+
+@media (min-width: 768px) {
+  .faq-section {
+    padding: var(--space-16) 0;
+  }
+}
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 860px;
+}
+
+@media (min-width: 768px) {
+  .faq-container {
+    gap: var(--space-10);
+  }
+}
+
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.faq-card {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+@media (min-width: 640px) {
+  .faq-card {
+    border-radius: var(--radius-lg);
+  }
+}
+
+.faq-card:hover {
+  border-color: rgba(0, 102, 255, 0.3);
+}
+
+.faq-card.is-open {
+  border-color: var(--brand-primary);
+  background-color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(0, 102, 255, 0.1);
+}
+
+.faq-question-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .faq-question-btn {
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-4);
+  }
+}
+
+.faq-q-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .faq-q-text {
+    font-size: 16px;
+  }
+}
+
+.faq-chevron {
+  color: var(--text-muted);
+  transition: transform var(--duration-fast) var(--ease-default);
+  flex-shrink: 0;
+}
+
+.faq-chevron.rotate {
+  transform: rotate(180deg);
+  color: var(--brand-primary);
+}
+
+.faq-answer-body {
+  padding: 0 var(--space-4) var(--space-4);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .faq-answer-body {
+    padding: 0 var(--space-5) var(--space-5);
+    font-size: 14px;
+  }
+}

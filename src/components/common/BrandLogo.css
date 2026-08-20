@@ -1,0 +1,67 @@
+.brand-logo-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.brand-logo-container.size-sm .brand-logo-icon-img {
+  height: 22px;
+  width: auto;
+}
+
+.brand-logo-container.size-sm .brand-wordmark-img {
+  height: 15px;
+  width: auto;
+}
+
+@media (min-width: 640px) {
+  .brand-logo-container.size-sm .brand-logo-icon-img {
+    height: 26px;
+  }
+  .brand-logo-container.size-sm .brand-wordmark-img {
+    height: 18px;
+  }
+}
+
+.brand-logo-container.size-md .brand-logo-icon-img {
+  height: 30px;
+  width: auto;
+}
+
+.brand-logo-container.size-md .brand-wordmark-img {
+  height: 20px;
+  width: auto;
+}
+
+.brand-logo-container.size-lg .brand-logo-icon-img {
+  height: 38px;
+  width: auto;
+}
+
+.brand-logo-container.size-lg .brand-wordmark-img {
+  height: 24px;
+  width: auto;
+}
+
+.brand-logo-icon-img {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 102, 255, 0.35));
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.brand-logo-container:hover .brand-logo-icon-img {
+  transform: scale(1.05);
+}
+
+.brand-wordmark-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.brand-wordmark-img {
+  display: block;
+  object-fit: contain;
+  filter: contrast(1.1);
+}
