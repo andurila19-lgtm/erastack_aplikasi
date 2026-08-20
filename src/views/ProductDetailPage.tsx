@@ -6,7 +6,7 @@ import {
   Monitor, Smartphone, Download, CheckCircle2, 
   ShieldCheck, Database, Cpu, Printer, 
   Zap, ArrowRight, HardDrive, 
-  Copy, Check, ChevronRight, BarChart3, Lock, Store, ShoppingBag
+  Copy, ChevronRight, BarChart3, Lock, Store
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { Badge } from '../components/ui/Badge';
@@ -20,14 +20,14 @@ interface SpecItem {
 }
 
 const POS_SPECS: SpecItem[] = [
-  { param: 'Kebutuhan Internet', value: '100% Bebas Kuota (Offline Total)', detail: 'Transaksi kasir dan cetak struk nota tetap jalan lancar tanpa koneksi internet' },
-  { param: 'Penyimpanan Data Toko', value: 'Memori Komputer/HP Sendiri', detail: 'Catatan keuangan dan stok barang tersimpan aman 100% milik Anda' },
-  { param: 'Biaya Pemakaian', value: 'Gratis Rp 0 Selamanya', detail: 'Bebas biaya langganan bulanan dan tanpa potongan komisi penjualan' },
-  { param: 'Dukungan Printer Struk', value: 'Universal (USB, Bluetooth, LAN)', detail: 'Langsung colok printer thermal kasir 58mm & 80mm tanpa instal driver rumit' },
-  { param: 'Dukungan Barcode Scanner', value: 'Semua Scanner USB & Wireless', detail: 'Deteksi barcode barang secepat kilat untuk mempercepat antrean pembeli' },
-  { param: 'Proteksi Mati Lampu', value: '100% Aman & Terlindungi', detail: 'Data transaksi yang sedang dicatat tidak akan rusak saat listrik padam mendadak' },
-  { param: 'Perangkat yang Didukung', value: 'Windows 10 / 11 & Android 8.0+', detail: 'Bisa dipasang di komputer kasir, laptop toko, maupun HP/tablet Android' },
-  { param: 'Keamanan Aplikasi', value: '100% Resmi & Bebas Iklan', detail: 'Bebas virus, bebas iklan pop-up, dan hemat baterai serta memori' },
+  { param: 'Kebutuhan Jaringan', value: 'Offline-First Mandiri', detail: 'Seluruh transaksi kasir, mutasi stok, dan pencetakan nota tetap beroperasi tanpa koneksi internet.' },
+  { param: 'Penyimpanan Data', value: 'SQLite Lokal (WAL Mode)', detail: 'Data keuangan dan stok tersimpan di media penyimpanan perangkat lokal pengguna.' },
+  { param: 'Model Lisensi', value: 'Mandiri / Bebas Sewa', detail: 'Tidak ada biaya langganan bulanan wajib atau potongan persentase per transaksi.' },
+  { param: 'Dukungan Printer Struk', value: 'ESC/POS (USB & Bluetooth)', detail: 'Kompatibel dengan printer thermal standar 58mm dan 80mm.' },
+  { param: 'Dukungan Barcode Scanner', value: 'USB HID & Wireless 2.4G', detail: 'Mendukung pemindai barcode 1D dan 2D standar keyboard emulation.' },
+  { param: 'Integritas Transaksi', value: 'ACID Transactional', detail: 'Mutasi stok dan nota dibungkus dalam blok transaksi database yang konsisten.' },
+  { param: 'Platform Perangkat', value: 'Windows 10/11 & Android', detail: 'Dapat dijalankan di komputer PC desktop, laptop, tablet, dan smartphone.' },
+  { param: 'Status Pengembangan', value: 'Active Development', detail: 'Fitur inti POS, inventaris, dan pelaporan lokal beroperasi secara stabil.' },
 ];
 
 export const ProductDetailPage: React.FC = () => {
@@ -39,20 +39,20 @@ export const ProductDetailPage: React.FC = () => {
     summary: string;
     metrics: { label: string; val: string }[];
   }>({
-    latency: 'Instan (0.04 Detik)',
-    summary: 'Total transaksi hari ini tercatat 142 nota dengan omset kotor Rp 4.850.000. Laba bersih terestimasi Rp 1.455.000 (Margin 30.0%). Produk paling laris: Paket Kopi Susu Aren (48 cup).',
+    latency: 'Simulasi Lokal',
+    summary: 'Total transaksi hari ini tercatat 142 nota dengan omset kotor Rp 4.850.000. Laba kotor terestimasi Rp 1.455.000 (Margin 30.0%). Produk paling laris: Beras Premium 5kg (48 pack).',
     metrics: [
       { label: 'Total Transaksi', val: '142 Nota' },
       { label: 'Total Omset', val: 'Rp 4.850.000' },
-      { label: 'Laba Bersih', val: 'Rp 1.455.000' },
-      { label: 'Biaya Kuota API', val: 'Rp 0 (Gratis)' },
+      { label: 'Laba Kotor', val: 'Rp 1.455.000' },
+      { label: 'Mode AI', val: 'On-Device Tool' },
     ],
   });
 
   const handleRunAiSample = (prompt: string, summary: string, metrics: { label: string; val: string }[]) => {
     setAiPrompt(prompt);
     setAiResult({
-      latency: 'Instan (0.04 Detik)',
+      latency: 'Simulasi Lokal',
       summary,
       metrics,
     });
@@ -61,8 +61,8 @@ export const ProductDetailPage: React.FC = () => {
   return (
     <div className="product-detail-page-root">
       <SEOHead
-        title="ERASTACK POS — Aplikasi Kasir Offline & Asisten Toko Cerdas"
-        description="Aplikasi kasir pintar 100% offline-first untuk Windows & Android: Ringan, cepat, langsung colok printer thermal, dan gratis digunakan selamanya tanpa biaya langganan."
+        title="ERASTACK POS — Aplikasi Kasir Offline-First & Manajemen Bisnis"
+        description="Aplikasi kasir offline-first untuk Windows & Android: Ringan, cepat, integrasi printer thermal ESC/POS, dan penyimpanan SQLite lokal mandiri."
       />
 
       <div className="detail-breadcrumb-bar">
@@ -70,7 +70,7 @@ export const ProductDetailPage: React.FC = () => {
           <nav className="breadcrumb-nav" aria-label="Breadcrumb">
             <Link href="/" className="breadcrumb-link">Beranda</Link>
             <ChevronRight size={13} className="breadcrumb-sep" />
-            <Link href="/products" className="breadcrumb-link">Produk Kasir</Link>
+            <Link href="/products" className="breadcrumb-link">Produk</Link>
             <ChevronRight size={13} className="breadcrumb-sep" />
             <span className="breadcrumb-curr">ERASTACK POS</span>
           </nav>
@@ -82,17 +82,17 @@ export const ProductDetailPage: React.FC = () => {
           <div className="detail-hero-grid">
             <div className="detail-hero-info">
               <div className="detail-badges-row">
-                <Badge variant="lime" size="sm" dot>Aplikasi Kasir Unggulan</Badge>
+                <Badge variant="cyan" size="sm" dot>Core POS Module</Badge>
                 <span className="version-pill-tag">v1.0.4 Stabil</span>
-                <span className="rating-pill-tag">★ 4.9 (25.000+ Toko Aktif)</span>
+                <span className="rating-pill-tag">Offline-First Engine</span>
               </div>
 
               <h1 className="detail-product-title">
-                ERASTACK POS: Aplikasi Kasir Cerdas <span className="highlight-text">Bebas Kuota</span> & Mandiri
+                ERASTACK POS: Sistem Kasir <span className="highlight-text">Offline-First</span> & Manajemen Bisnis
               </h1>
 
               <p className="detail-product-desc">
-                Dirancang khusus untuk pengusaha toko di Indonesia yang membutuhkan sistem kasir berkecepatan tinggi tanpa kompromi. Beroperasi 100% mandiri di perangkat kasir Anda tanpa bergantung pada koneksi internet dan tanpa biaya sewa bulanan.
+                Dirancang untuk operasional transaksi bisnis yang membutuhkan keandalan tanpa ketergantungan koneksi internet. Beroperasi mandiri di perangkat lokal Anda dengan penyimpanan database SQLite.
               </p>
 
               <div className="detail-os-platforms-row">
@@ -107,36 +107,36 @@ export const ProductDetailPage: React.FC = () => {
                   <Smartphone size={18} className="os-card-icon" />
                   <div className="os-card-text">
                     <strong>HP & Tablet Kasir</strong>
-                    <span>Android 8.0 hingga 15+</span>
+                    <span>Android 8.0+</span>
                   </div>
                 </div>
               </div>
 
               <div className="detail-actions-row">
-                <Link href="/downloads" className="btn-wrap-full">
-                  <Button size="lg" variant="primary" leftIcon={<Download size={18} />}>
-                    Unduh Aplikasi Kasir Gratis (v1.0.4)
+                <Link href="/pos" className="btn-wrap-full">
+                  <Button size="lg" variant="primary" leftIcon={<Zap size={18} />}>
+                    Coba Demo Kasir Web
                   </Button>
                 </Link>
-                <a href="#fitur-kasir" className="btn-wrap-full">
-                  <Button size="lg" variant="secondary" rightIcon={<ArrowRight size={16} />}>
-                    Lihat Keunggulan Toko
+                <Link href="/downloads" className="btn-wrap-full">
+                  <Button size="lg" variant="secondary" leftIcon={<Download size={18} />}>
+                    Unduh Installer (v1.0.4)
                   </Button>
-                </a>
+                </Link>
               </div>
 
               <div className="detail-trust-points">
                 <span className="trust-item">
-                  <CheckCircle2 size={15} className="trust-icon" />
-                  <span>100% Bisa Dipakai Tanpa Internet</span>
+                  <HardDrive size={15} className="trust-icon" />
+                  <span>Operasi Mandiri Tanpa Internet</span>
                 </span>
                 <span className="trust-item">
-                  <CheckCircle2 size={15} className="trust-icon" />
-                  <span>Gratis Selamanya Tanpa Biaya Sewa</span>
+                  <Database size={15} className="trust-icon" />
+                  <span>Penyimpanan SQLite Lokal</span>
                 </span>
                 <span className="trust-item">
-                  <CheckCircle2 size={15} className="trust-icon" />
-                  <span>Asisten AI Toko Tanpa Kuota</span>
+                  <Cpu size={15} className="trust-icon" />
+                  <span>Local AI Tool Calling</span>
                 </span>
               </div>
             </div>
@@ -144,55 +144,55 @@ export const ProductDetailPage: React.FC = () => {
             <div className="detail-hero-stats-panel">
               <div className="stats-glass-card">
                 <div className="stats-header">
-                  <h3 className="stats-title">Ringkasan Keunggulan Toko</h3>
-                  <span className="stats-status-tag">Terverifikasi 100%</span>
+                  <h3 className="stats-title">Spesifikasi Arsitektur</h3>
+                  <span className="stats-status-tag">Local-First</span>
                 </div>
 
                 <div className="stats-metrics-list">
                   <div className="metric-row">
                     <div className="metric-info">
-                      <span className="metric-name">Kecepatan Scan Barcode</span>
-                      <span className="metric-sub">Pencarian 50.000 barang instan</span>
+                      <span className="metric-name">Basis Database</span>
+                      <span className="metric-sub">Penyimpanan relasional lokal</span>
                     </div>
-                    <span className="metric-badge green">&lt; 2 ms (Instan)</span>
+                    <span className="metric-badge green">SQLite (WAL)</span>
                   </div>
 
                   <div className="metric-row">
                     <div className="metric-info">
-                      <span className="metric-name">Kecepatan Cetak Struk Struk</span>
-                      <span className="metric-sub">Langsung keluar tanpa jeda</span>
+                      <span className="metric-name">Protokol Printer</span>
+                      <span className="metric-sub">Format nota monospaced</span>
                     </div>
-                    <span className="metric-badge green">&lt; 0.1 Detik</span>
+                    <span className="metric-badge green">ESC/POS</span>
                   </div>
 
                   <div className="metric-row">
                     <div className="metric-info">
-                      <span className="metric-name">Kebutuhan Komputer Kasir</span>
-                      <span className="metric-sub">Komputer lama tetap lancar</span>
+                      <span className="metric-name">Pemindai Barcode</span>
+                      <span className="metric-sub">Keyboard emulation input</span>
                     </div>
-                    <span className="metric-badge blue">Sangat Ringan</span>
+                    <span className="metric-badge blue">USB HID / 2.4G</span>
                   </div>
 
                   <div className="metric-row">
                     <div className="metric-info">
-                      <span className="metric-name">Biaya Kuota / Langganan</span>
-                      <span className="metric-sub">Bebas potongan komisi</span>
+                      <span className="metric-name">Konsistensi Stok</span>
+                      <span className="metric-sub">Pencatatan atomic commit</span>
                     </div>
-                    <span className="metric-badge green">Rp 0 / Selamanya</span>
+                    <span className="metric-badge green">ACID Wrapped</span>
                   </div>
 
                   <div className="metric-row">
                     <div className="metric-info">
-                      <span className="metric-name">Keamanan saat Mati Lampu</span>
-                      <span className="metric-sub">Transaksi tersimpan permanen</span>
+                      <span className="metric-name">Pencadangan Data</span>
+                      <span className="metric-sub">Ekspor berkas database</span>
                     </div>
-                    <span className="metric-badge purple">100% Aman</span>
+                    <span className="metric-badge purple">File .sqlite</span>
                   </div>
                 </div>
 
                 <div className="stats-panel-footer">
                   <Lock size={14} className="footer-lock-icon" />
-                  <span>Kedaulatan Data Toko: Seluruh data penjualan milik Anda seutuhnya</span>
+                  <span>Kedaulatan Data: Seluruh riwayat transaksi tersimpan di perangkat lokal</span>
                 </div>
               </div>
             </div>
@@ -203,12 +203,12 @@ export const ProductDetailPage: React.FC = () => {
       <section className="architecture-section" id="fitur-kasir">
         <div className="container">
           <div className="section-head-center">
-            <Badge variant="cyan" size="sm">Kemudahan Toko</Badge>
+            <Badge variant="cyan" size="sm">Modul Sistem</Badge>
             <h2 className="section-main-title">
-              Fitur Lengkap untuk Melancarkan Operasional Toko Anda
+              Fitur Operasional ERASTACK POS
             </h2>
             <p className="section-main-subtitle">
-              Setiap tombol dan menu dirancang mudah dipelajari kasir baru hanya dalam 5 menit.
+              Eksplorasi modul inti kasir, database lokal, analisis AI, dan integrasi hardware.
             </p>
           </div>
 
@@ -220,7 +220,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('pos')}
               >
                 <Zap size={16} />
-                <span>Kasir Cepat & Antrean Lancar</span>
+                <span>Transaksi Kasir</span>
               </button>
 
               <button
@@ -229,7 +229,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('sqlite')}
               >
                 <Database size={16} />
-                <span>Data Aman Tanpa Internet</span>
+                <span>Database SQLite Lokal</span>
               </button>
 
               <button
@@ -238,7 +238,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('ai')}
               >
                 <Cpu size={16} />
-                <span>Asisten Pintar Laba & Stok</span>
+                <span>Local AI Assistant</span>
               </button>
 
               <button
@@ -247,7 +247,7 @@ export const ProductDetailPage: React.FC = () => {
                 onClick={() => setActiveTab('hardware')}
               >
                 <Printer size={16} />
-                <span>Langsung Colok Printer & Scanner</span>
+                <span>Integrasi Hardware</span>
               </button>
             </div>
           </div>
@@ -257,12 +257,12 @@ export const ProductDetailPage: React.FC = () => {
               <div className="tab-pane-content">
                 <div className="pane-left-info">
                   <div className="pane-badge-group">
-                    <span className="pane-cat-tag">Kecepatan Tinggi</span>
-                    <span className="pane-status-pill">Kasir Instan &lt; 2ms</span>
+                    <span className="pane-cat-tag">Terminal Kasir</span>
+                    <span className="pane-status-pill">Offline-First Engine</span>
                   </div>
-                  <h3 className="pane-title">Kasir Cepat untuk Melayani Antrean Ramai</h3>
+                  <h3 className="pane-title">Antarmuka Kasir Berkecepatan Tinggi</h3>
                   <p className="pane-desc">
-                    Saat jam sibuk atau antrean panjang, kasir tidak boleh menunggu loading internet atau layar berputar. ERASTACK POS memproses pencarian barcode, pemotongan stok otomatis, dan perhitungan diskon dalam hitungan milidetik secara lokal.
+                    Memproses pencarian barcode, pemotongan stok otomatis, dan perhitungan diskon secara lokal tanpa delay jaringan internet.
                   </p>
 
                   <div className="pipeline-steps-list">
@@ -270,21 +270,21 @@ export const ProductDetailPage: React.FC = () => {
                       <span className="step-badge">1</span>
                       <div className="step-detail">
                         <strong>Scan Barcode atau Sentuh Layar</strong>
-                        <span>Menerima sinyal barcode scanner USB/Bluetooth tanpa jeda keyboard buffer.</span>
+                        <span>Menerima sinyal pemindai barcode USB/Bluetooth secara langsung.</span>
                       </div>
                     </div>
                     <div className="pipeline-step">
                       <span className="step-badge">2</span>
                       <div className="step-detail">
-                        <strong>Hitung Kembalian & Diskon Otomatis</strong>
-                        <span>Nominal kembalian tampil dengan angka besar dan jelas agar kasir tidak salah hitung.</span>
+                        <strong>Kalkulasi Diskon & Subtotal</strong>
+                        <span>Perhitungan angka berbasis integer mata uang untuk akurasi nominal.</span>
                       </div>
                     </div>
                     <div className="pipeline-step">
                       <span className="step-badge">3</span>
                       <div className="step-detail">
-                        <strong>Struk Keluar & Stok Otomatis Berkurang</strong>
-                        <span>Struk nota tercetak instan dan stok barang otomatis terpotong rapi.</span>
+                        <strong>Commit Transaksi & Cetak Nota</strong>
+                        <span>Struk nota dicetak dan mutasi stok dicatat ke database lokal.</span>
                       </div>
                     </div>
                   </div>
@@ -294,37 +294,37 @@ export const ProductDetailPage: React.FC = () => {
                   <div className="cashier-demo-box">
                     <div className="demo-box-head">
                       <Store size={18} className="text-brand" />
-                      <span className="demo-head-title">Simulasi Kasir Toko Aktif</span>
-                      <span className="demo-status-pill">Siap Melayani</span>
+                      <span className="demo-head-title">Terminal Kasir Aktif</span>
+                      <span className="demo-status-pill">Siap Transaksi</span>
                     </div>
 
                     <div className="demo-cart-preview">
                       <div className="demo-cart-row">
-                        <span>2x Kopi Susu Aren</span>
-                        <strong>Rp 48.000</strong>
+                        <span>2x Beras Premium 5kg</span>
+                        <strong>Rp 136.000</strong>
                       </div>
                       <div className="demo-cart-row">
-                        <span>1x Roti Bakar Cokelat</span>
-                        <strong>Rp 22.000</strong>
+                        <span>1x Minyak Goreng 2L</span>
+                        <strong>Rp 34.000</strong>
                       </div>
                       <div className="demo-divider" />
                       <div className="demo-cart-total">
                         <span>Total Belanja:</span>
-                        <span className="total-num">Rp 70.000</span>
+                        <span className="total-num">Rp 170.000</span>
                       </div>
                       <div className="demo-cash-row">
-                        <span>Uang Tunai Pembeli:</span>
-                        <span>Rp 100.000</span>
+                        <span>Uang Tunai:</span>
+                        <span>Rp 200.000</span>
                       </div>
                       <div className="demo-change-row">
-                        <span>Kembalian Uang:</span>
+                        <span>Kembalian:</span>
                         <strong className="change-num">Rp 30.000</strong>
                       </div>
                     </div>
 
                     <div className="demo-footer-banner">
                       <CheckCircle2 size={16} className="text-emerald" />
-                      <span>Transaksi selesai dalam 0.8 detik • Nota siap cetak</span>
+                      <span>Transaksi tercatat ke SQLite lokal • Nota siap cetak</span>
                     </div>
                   </div>
                 </div>
@@ -335,36 +335,36 @@ export const ProductDetailPage: React.FC = () => {
               <div className="tab-pane-content">
                 <div className="pane-left-info">
                   <div className="pane-badge-group">
-                    <span className="pane-cat-tag">Penyimpanan Mandiri</span>
-                    <span className="pane-status-pill">100% Offline Lokal</span>
+                    <span className="pane-cat-tag">Penyimpanan Terstruktur</span>
+                    <span className="pane-status-pill">Offline Persistence</span>
                   </div>
-                  <h3 className="pane-title">Data Toko Tersimpan Aman di Komputer Sendiri</h3>
+                  <h3 className="pane-title">Kedaulatan Data di Media Lokal</h3>
                   <p className="pane-desc">
-                    Aplikasi kasir lain menyimpan data Anda di server internet mereka sehingga Anda harus membayar sewa setiap bulan. Dengan ERASTACK POS, data penjualan tersimpan langsung di dalam komputer/HP kasir Anda sendiri secara privat dan permanen.
+                    Data transaksi dan master produk tersimpan langsung di perangkat lokal pengguna tanpa ketergantungan wajib pada server cloud pihak ketiga.
                   </p>
 
                   <div className="sqlite-comparison-grid">
                     <div className="compare-box erastack">
                       <div className="compare-head">
                         <CheckCircle2 size={16} className="text-emerald" />
-                        <strong>ERASTACK POS (Offline Lokal)</strong>
+                        <strong>EraStack (Offline-First)</strong>
                       </div>
                       <ul className="compare-list">
-                        <li>Bisa jualan lancar walau internet mati</li>
-                        <li>Gratis selamanya tanpa biaya sewa</li>
-                        <li>Data penjualan 100% rahasia toko Anda</li>
+                        <li>Operasi kasir normal saat jaringan offline</li>
+                        <li>Kepemilikan file database (.sqlite) seutuhnya</li>
+                        <li>Privasi data transaksi tersimpan di perangkat lokal</li>
                       </ul>
                     </div>
 
                     <div className="compare-box cloud">
                       <div className="compare-head">
-                        <span className="cross-bullet">✕</span>
-                        <strong>Kasir Cloud Online Biasa</strong>
+                        <span className="cross-bullet">○</span>
+                        <strong>Cloud POS Standar</strong>
                       </div>
                       <ul className="compare-list">
-                        <li>Kasir macet saat internet drop / mati lampu</li>
-                        <li>Data terkunci jika telat bayar langganan</li>
-                        <li>Risiko kebocoran data di server luar</li>
+                        <li>Membutuhkan koneksi internet aktif untuk transaksi</li>
+                        <li>Data tersimpan di server cloud pihak ketiga</li>
+                        <li>Akses tergantung pada langganan layanan cloud</li>
                       </ul>
                     </div>
                   </div>
@@ -372,26 +372,26 @@ export const ProductDetailPage: React.FC = () => {
 
                 <div className="pane-right-showcase">
                   <div className="sqlite-features-card">
-                    <h4 className="card-subhead">Keamanan Data Usaha Anda</h4>
+                    <h4 className="card-subhead">Keamanan Data Operasional</h4>
                     <div className="spec-bullet-row">
                       <HardDrive size={18} className="spec-bullet-icon" />
                       <div>
-                        <strong>Bebas Disandera Biaya Langganan</strong>
-                        <p>Seluruh riwayat toko tetap bisa Anda akses selamanya tanpa perlu membayar biaya sewa software.</p>
+                        <strong>Kemandirian Sistem</strong>
+                        <p>Riwayat transaksi tetap dapat diakses tanpa biaya sewa software berkala.</p>
                       </div>
                     </div>
                     <div className="spec-bullet-row">
                       <ShieldCheck size={18} className="spec-bullet-icon" />
                       <div>
-                        <strong>Proteksi Aman saat Mati Listrik</strong>
-                        <p>Sistem pencatatan aman memastikan file database tidak akan rusak meskipun komputer kasir mendadak mati lampu.</p>
+                        <strong>Proteksi WAL Mode</strong>
+                        <p>Write-Ahead Logging mencegah korupsi file basis data saat terjadi pemadaman listrik mendadak.</p>
                       </div>
                     </div>
                     <div className="spec-bullet-row">
                       <Copy size={18} className="spec-bullet-icon" />
                       <div>
-                        <strong>Cadangkan (Backup) 1-Klik Mudah</strong>
-                        <p>Cukup salin 1 file cadangan ke flashdisk atau Google Drive untuk mengamankan seluruh riwayat toko Anda.</p>
+                        <strong>Pencadangan Mandiri</strong>
+                        <p>Dapat menyalin berkas database .sqlite ke flashdisk atau media penyimpanan eksternal.</p>
                       </div>
                     </div>
                   </div>
@@ -403,28 +403,28 @@ export const ProductDetailPage: React.FC = () => {
               <div className="tab-pane-content">
                 <div className="pane-left-info">
                   <div className="pane-badge-group">
-                    <span className="pane-cat-tag">Kecerdasan Buatan Toko</span>
-                    <span className="pane-status-pill">100% Bebas Kuota</span>
+                    <span className="pane-cat-tag">Analisis Lokal</span>
+                    <span className="pane-status-pill">On-Device Tool Calling</span>
                   </div>
-                  <h3 className="pane-title">AI Asisten Bisnis Toko: Analisis Penjualan Tanpa Internet</h3>
+                  <h3 className="pane-title">Local AI Assistant untuk Analisis Penjualan</h3>
                   <p className="pane-desc">
-                    Tanyakan apa saja tentang rekap omset harian, barang yang mau habis, hingga jam paling ramai di toko Anda seperti mengobrol dengan manajer toko berpengalaman. Bekerja langsung di komputer & HP kasir Anda tanpa menghabiskan kuota internet.
+                    Menganalisis data penjualan dan audit stok secara lokal di perangkat kasir Anda tanpa mengirimkan data ke API cloud eksternal.
                   </p>
 
                   <div className="ai-sample-queries">
-                    <span className="queries-label">Pilih Contoh Pertanyaan Toko:</span>
+                    <span className="queries-label">Pilih Contoh Pertanyaan Analisis:</span>
                     <div className="query-btn-row">
                       <button
                         type="button"
                         className="query-pill-btn"
                         onClick={() => handleRunAiSample(
                           'Berapa ringkasan penjualan dan laba kotor hari ini?',
-                          'Total transaksi hari ini tercatat 142 nota dengan omset kotor Rp 4.850.000. Laba bersih terestimasi Rp 1.455.000 (Margin 30.0%). Produk paling laris: Paket Kopi Susu Aren (48 cup).',
+                          'Total transaksi hari ini tercatat 142 nota dengan omset kotor Rp 4.850.000. Laba kotor terestimasi Rp 1.455.000 (Margin 30.0%). Produk paling laris: Beras Premium 5kg (48 pack).',
                           [
                             { label: 'Total Transaksi', val: '142 Nota' },
                             { label: 'Total Omset', val: 'Rp 4.850.000' },
-                            { label: 'Laba Bersih', val: 'Rp 1.455.000' },
-                            { label: 'Biaya Kuota API', val: 'Rp 0 (Gratis)' },
+                            { label: 'Laba Kotor', val: 'Rp 1.455.000' },
+                            { label: 'Mode AI', val: 'On-Device Tool' },
                           ]
                         )}
                       >
@@ -436,12 +436,12 @@ export const ProductDetailPage: React.FC = () => {
                         className="query-pill-btn"
                         onClick={() => handleRunAiSample(
                           'Produk apa saja yang stoknya berada di bawah batas aman?',
-                          'Terdeteksi 3 produk di bawah batas minimum: Gula Aren Cair (Sisa 2 botol, estimasi habis besok), Cup 16oz (Sisa 18 pcs), dan Biji Kopi Arabica (Sisa 1.2 kg). Direkomendasikan melakukan restock segera.',
+                          'Terdeteksi 3 produk di bawah batas minimum: Minyak Goreng 2L (Sisa 2 pcs), Gula Pasir 1kg (Sisa 4 pcs), dan Kertas Thermal 58mm (Sisa 3 roll). Direkomendasikan melakukan restock segera.',
                           [
                             { label: 'Item Kritis', val: '3 Produk' },
-                            { label: 'Estimasi Habis', val: '24 Jam' },
+                            { label: 'Threshold', val: '< 5 Pcs' },
                             { label: 'Rekomendasi', val: 'Pesan Suplier' },
-                            { label: 'Status Data', val: '100% Akurat' },
+                            { label: 'Status Data', val: 'Tervalidasi' },
                           ]
                         )}
                       >
@@ -453,16 +453,16 @@ export const ProductDetailPage: React.FC = () => {
                         className="query-pill-btn"
                         onClick={() => handleRunAiSample(
                           'Jam berapa toko mengalami traffic pembeli paling padat?',
-                          'Analisis 7 hari terakhir menunjukkan jam sibuk utama terjadi pada pukul 12:00 - 13:30 (Siang) dan 18:30 - 20:30 (Malam). Disarankan menambah 1 kasir aktif pada rentang waktu tersebut.',
+                          'Analisis riwayat nota menunjukkan jam sibuk utama terjadi pada pukul 12:00 - 13:30 (Siang) dan 18:30 - 20:30 (Sore). Disarankan memastikan kesiapan laci kasir pada rentang waktu tersebut.',
                           [
                             { label: 'Puncak Siang', val: '12:00 - 13:30' },
-                            { label: 'Puncak Malam', val: '18:30 - 20:30' },
-                            { label: 'Rata-rata Nota/Jam', val: '38 Nota' },
-                            { label: 'Saran Shift', val: '+1 Kasir Siaga' },
+                            { label: 'Puncak Sore', val: '18:30 - 20:30' },
+                            { label: 'Volume', val: 'Tinggi' },
+                            { label: 'Kesiapan', val: 'Kasir & Struk' },
                           ]
                         )}
                       >
-                        ⏰ Jam Sibuk Toko
+                        ⏰ Jam Sibuk
                       </button>
                     </div>
                   </div>
@@ -473,18 +473,18 @@ export const ProductDetailPage: React.FC = () => {
                     <div className="ai-sandbox-head">
                       <div className="ai-status-indicator">
                         <span className="live-dot" />
-                        <span>Asisten Toko Siap Menjawab</span>
+                        <span>Local Dispatcher Ready</span>
                       </div>
                       <span className="ai-latency-tag">{aiResult.latency}</span>
                     </div>
 
                     <div className="ai-prompt-display">
-                      <span className="prompt-label">Pertanyaan Pemilik Toko:</span>
+                      <span className="prompt-label">Query Pengguna:</span>
                       <p className="prompt-text">"{aiPrompt}"</p>
                     </div>
 
                     <div className="ai-response-box">
-                      <span className="response-label">Hasil Analisis AI Asisten Toko:</span>
+                      <span className="response-label">Hasil Eksekusi Tool Analitik:</span>
                       <p className="response-text">{aiResult.summary}</p>
                     </div>
 
@@ -505,12 +505,12 @@ export const ProductDetailPage: React.FC = () => {
               <div className="tab-pane-content">
                 <div className="pane-left-info">
                   <div className="pane-badge-group">
-                    <span className="pane-cat-tag">Kemudahan Perangkat</span>
-                    <span className="pane-status-pill">Langsung Siap Pakai</span>
+                    <span className="pane-cat-tag">Standar Periferal</span>
+                    <span className="pane-status-pill">Universal Protocol</span>
                   </div>
-                  <h3 className="pane-title">Kompatibilitas Penuh dengan Semua Printer & Scanner Toko</h3>
+                  <h3 className="pane-title">Dukungan Universal Printer & Scanner</h3>
                   <p className="pane-desc">
-                    Tinggalkan kerumitan menginstal driver printer kasir yang sering gagal di Windows atau Android. ERASTACK POS langsung mendeteksi printer thermal USB, printer Bluetooth, dan barcode scanner secara otomatis.
+                    Kompatibel dengan printer thermal ESC/POS (USB & Bluetooth), barcode scanner USB HID, dan laci uang kasir RJ11 standar industri.
                   </p>
 
                   <div className="hardware-compat-list">
@@ -518,21 +518,21 @@ export const ProductDetailPage: React.FC = () => {
                       <Printer size={18} className="compat-icon" />
                       <div className="compat-text">
                         <strong>Printer Thermal Kasir 58mm & 80mm</strong>
-                        <span>Mendukung koneksi kabel USB, Bluetooth nirkabel, dan kabel LAN. Bisa buka laci kasir otomatis.</span>
+                        <span>Mendukung koneksi USB, Bluetooth nirkabel, dan protokol ESC/POS standar.</span>
                       </div>
                     </div>
                     <div className="compat-item">
                       <Zap size={18} className="compat-icon" />
                       <div className="compat-text">
-                        <strong>Barcode & 2D QR Scanner</strong>
-                        <span>Mendukung semua scanner barcode USB dan wireless untuk membaca kode barang secara instan.</span>
+                        <strong>Barcode Scanner 1D & 2D</strong>
+                        <span>Mendukung pemindai barcode USB HID dan wireless 2.4G keyboard emulation.</span>
                       </div>
                     </div>
                     <div className="compat-item">
                       <BarChart3 size={18} className="compat-icon" />
                       <div className="compat-text">
-                        <strong>Laci Kasir Uang Otomatis (Cash Drawer)</strong>
-                        <span>Laci uang terbuka otomatis saat transaksi pembayaran tunai selesai.</span>
+                        <strong>Laci Kasir Uang (Cash Drawer RJ11)</strong>
+                        <span>Terbuka otomatis saat perintah pencetakan struk pembayaran tunai selesai.</span>
                       </div>
                     </div>
                   </div>
@@ -547,36 +547,36 @@ export const ProductDetailPage: React.FC = () => {
                     </div>
 
                     <div className="receipt-body">
-                      <div className="receipt-store-title">KOPI NUSANTARA INDONESIA</div>
-                      <div className="receipt-sub">Jl. Sukajadi No. 45, Bandung</div>
+                      <div className="receipt-store-title">TOKO SEMBAKO BAROKAH</div>
+                      <div className="receipt-sub">Terminal Kasir 01 • Struk Belanja</div>
                       <div className="receipt-line-dashed" />
                       
                       <div className="receipt-item-row">
-                        <span>2x Kopi Susu Aren (L)</span>
-                        <span className="tabular-nums">Rp 48.000</span>
+                        <span>2x Beras Premium 5kg</span>
+                        <span className="tabular-nums">Rp 136.000</span>
                       </div>
                       <div className="receipt-item-row">
-                        <span>1x Roti Bakar Cokelat</span>
-                        <span className="tabular-nums">Rp 22.000</span>
+                        <span>1x Minyak Goreng 2L</span>
+                        <span className="tabular-nums">Rp 34.000</span>
                       </div>
                       
                       <div className="receipt-line-dashed" />
                       <div className="receipt-item-row bold">
                         <span>TOTAL PEMBAYARAN</span>
-                        <span className="tabular-nums">Rp 70.000</span>
+                        <span className="tabular-nums">Rp 170.000</span>
                       </div>
                       <div className="receipt-item-row">
                         <span>TUNAI (CASH)</span>
-                        <span className="tabular-nums">Rp 100.000</span>
+                        <span className="tabular-nums">Rp 200.000</span>
                       </div>
                       <div className="receipt-item-row">
-                        <span>KEMBALI</span>
+                        <span>KEMBALIAN</span>
                         <span className="tabular-nums">Rp 30.000</span>
                       </div>
                       <div className="receipt-line-dashed" />
                       <div className="receipt-footer-text">
                         Terima Kasih Atas Kunjungan Anda<br />
-                        Dicetak Cepat dengan ERASTACK POS (0.1 Detik)
+                        Dicetak dengan ERASTACK POS (ESC/POS)
                       </div>
                     </div>
                   </div>
@@ -590,10 +590,10 @@ export const ProductDetailPage: React.FC = () => {
       <section className="specs-table-section">
         <div className="container">
           <div className="section-head-center">
-            <Badge variant="lime" size="sm">Spesifikasi Lengkap</Badge>
+            <Badge variant="cyan" size="sm">Spesifikasi Sistem</Badge>
             <h2 className="section-main-title">Tabel Kemampuan & Spesifikasi ERASTACK POS</h2>
             <p className="section-main-subtitle">
-              Transparansi penuh tentang kelebihan sistem kasir untuk memajukan usaha toko Anda.
+              Ringkasan teknis kapabilitas sistem kasir offline-first.
             </p>
           </div>
 
@@ -601,9 +601,9 @@ export const ProductDetailPage: React.FC = () => {
             <table className="specs-table">
               <thead>
                 <tr>
-                  <th className="th-param">Kelebihan Kasir Toko</th>
+                  <th className="th-param">Parameter Sistem</th>
                   <th className="th-val">Spesifikasi ERASTACK POS</th>
-                  <th className="th-detail">Manfaat untuk Usaha Anda</th>
+                  <th className="th-detail">Keterangan Arsitektural</th>
                 </tr>
               </thead>
               <tbody>
@@ -626,10 +626,10 @@ export const ProductDetailPage: React.FC = () => {
         <div className="container">
           <div className="download-card-wrapper">
             <div className="download-head-group">
-              <Badge variant="lime" size="sm" dot>Unduh Aplikasi Kasir</Badge>
-              <h2 className="download-main-title">Unduh ERASTACK POS v1.0.4 Sekarang</h2>
+              <Badge variant="lime" size="sm" dot>Pusat Unduhan</Badge>
+              <h2 className="download-main-title">Unduh ERASTACK POS v1.0.4</h2>
               <p className="download-main-desc">
-                Pilih aplikasi kasir sesuai perangkat yang Anda gunakan di toko. Gratis selamanya dan langsung siap pakai.
+                Pilih paket biner resmi sesuai dengan target sistem operasi kasir Anda.
               </p>
             </div>
 
@@ -639,32 +639,32 @@ export const ProductDetailPage: React.FC = () => {
                   <div className="binary-icon-box">
                     <Monitor size={24} className="text-brand" />
                   </div>
-                  <Badge variant="cyan" size="sm">Untuk PC Kasir & Laptop</Badge>
+                  <Badge variant="cyan" size="sm">Windows Desktop</Badge>
                 </div>
 
                 <div className="binary-title-group">
-                  <h3 className="binary-name">ERASTACK POS untuk Komputer Kasir (Windows)</h3>
-                  <span className="binary-meta">Versi 1.0.4 • Installer Cepat (48.2 MB)</span>
+                  <h3 className="binary-name">ERASTACK POS Windows Desktop (.exe)</h3>
+                  <span className="binary-meta">Versi 1.0.4 • Installer Resmi (48.2 MB)</span>
                 </div>
 
                 <p className="binary-desc">
-                  Cocok untuk komputer PC kasir, laptop toko, dan mesin POS layar sentuh Windows 10 & 11.
+                  Untuk komputer PC kasir, laptop, dan terminal POS layar sentuh Windows 10 & 11 (64-bit).
                 </p>
 
                 <div className="store-benefits-pill-box">
                   <div className="benefit-item-mini">
                     <CheckCircle2 size={14} className="text-emerald" />
-                    <span>100% Bisa jalan tanpa internet</span>
+                    <span>Database SQLite lokal terintegrasi</span>
                   </div>
                   <div className="benefit-item-mini">
                     <CheckCircle2 size={14} className="text-emerald" />
-                    <span>Langsung colok printer struk & barcode scanner</span>
+                    <span>Dukungan printer ESC/POS & scanner USB HID</span>
                   </div>
                 </div>
 
                 <Link href="/downloads" className="btn-wrap-full">
                   <Button variant="primary" size="lg" leftIcon={<Download size={18} />}>
-                    Unduh untuk Komputer Kasir (.exe)
+                    Unduh Installer Windows (.exe)
                   </Button>
                 </Link>
               </div>
@@ -674,32 +674,32 @@ export const ProductDetailPage: React.FC = () => {
                   <div className="binary-icon-box">
                     <Smartphone size={24} className="text-emerald" />
                   </div>
-                  <Badge variant="lime" size="sm">Untuk HP & Tablet</Badge>
+                  <Badge variant="lime" size="sm">Android Mobile</Badge>
                 </div>
 
                 <div className="binary-title-group">
-                  <h3 className="binary-name">ERASTACK POS untuk HP & Tablet (Android)</h3>
+                  <h3 className="binary-name">ERASTACK POS Android Package (.apk)</h3>
                   <span className="binary-meta">Versi 1.0.4 • Standalone APK (28.5 MB)</span>
                 </div>
 
                 <p className="binary-desc">
-                  Cocok untuk smartphone Android, tablet kasir, dan mesin POS portabel (Sunmi, iMin, Samsung, Xiaomi).
+                  Untuk smartphone Android, tablet kasir, dan mesin POS portabel (Android 8.0+).
                 </p>
 
                 <div className="store-benefits-pill-box">
                   <div className="benefit-item-mini">
                     <CheckCircle2 size={14} className="text-emerald" />
-                    <span>Scan barcode langsung pakai kamera HP</span>
+                    <span>Dukungan printer thermal Bluetooth 58mm</span>
                   </div>
                   <div className="benefit-item-mini">
                     <CheckCircle2 size={14} className="text-emerald" />
-                    <span>Cetak struk via Bluetooth tanpa kabel</span>
+                    <span>Pemindaian barcode via kamera atau scanner</span>
                   </div>
                 </div>
 
                 <Link href="/downloads" className="btn-wrap-full">
                   <Button variant="secondary" size="lg" leftIcon={<Download size={18} />}>
-                    Unduh untuk HP / Tablet (.apk)
+                    Unduh Package Android (.apk)
                   </Button>
                 </Link>
               </div>
@@ -708,7 +708,7 @@ export const ProductDetailPage: React.FC = () => {
             <div className="security-guarantee-bar">
               <ShieldCheck size={18} className="shield-icon" />
               <span>
-                Aplikasi resmi ERASTACK <strong>100% Aman, Bebas Virus & Bebas Iklan</strong>. Gratis digunakan selamanya untuk memajukan usaha toko Anda.
+                Paket biner resmi diverifikasi dengan tanda tangan kriptografis digital dan hash SHA-256 publik.
               </span>
             </div>
           </div>

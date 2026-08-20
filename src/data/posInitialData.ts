@@ -9,7 +9,70 @@ export interface PosProduct {
   stock: number;
   minStock: number;
   unit: string;
+  isActive?: boolean;
 }
+
+export type StockMovementType = 'SALE' | 'RESTOCK' | 'ADJUSTMENT' | 'RETURN';
+
+export interface StockMovement {
+  id: string;
+  productId: string;
+  productName: string;
+  type: StockMovementType;
+  qtyChange: number;
+  stockBefore: number;
+  stockAfter: number;
+  timestamp: string;
+  user: string;
+  referenceId?: string;
+  notes?: string;
+}
+
+export type UserRole = 'OWNER' | 'MANAGER' | 'CASHIER';
+
+export interface RolePermissionConfig {
+  canAccessDashboard: boolean;
+  canAccessPOS: boolean;
+  canManageInventory: boolean;
+  canAdjustStock: boolean;
+  canAccessReports: boolean;
+  canExportData: boolean;
+  canManageSettings: boolean;
+  canDeleteProducts: boolean;
+}
+
+export const ROLE_PERMISSIONS: Record<UserRole, RolePermissionConfig> = {
+  OWNER: {
+    canAccessDashboard: true,
+    canAccessPOS: true,
+    canManageInventory: true,
+    canAdjustStock: true,
+    canAccessReports: true,
+    canExportData: true,
+    canManageSettings: true,
+    canDeleteProducts: true,
+  },
+  MANAGER: {
+    canAccessDashboard: true,
+    canAccessPOS: true,
+    canManageInventory: true,
+    canAdjustStock: true,
+    canAccessReports: true,
+    canExportData: true,
+    canManageSettings: false,
+    canDeleteProducts: false,
+  },
+  CASHIER: {
+    canAccessDashboard: false,
+    canAccessPOS: true,
+    canManageInventory: false,
+    canAdjustStock: false,
+    canAccessReports: false,
+    canExportData: false,
+    canManageSettings: false,
+    canDeleteProducts: false,
+  },
+};
 
 export interface CartItem {
   product: PosProduct;
@@ -69,6 +132,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 24,
     minStock: 5,
     unit: 'karung',
+    isActive: true,
   },
   {
     id: 'prod-2',
@@ -81,6 +145,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 36,
     minStock: 8,
     unit: 'pouch',
+    isActive: true,
   },
   {
     id: 'prod-3',
@@ -93,6 +158,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 45,
     minStock: 10,
     unit: 'bungkus',
+    isActive: true,
   },
   {
     id: 'prod-4',
@@ -105,6 +171,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 28,
     minStock: 6,
     unit: 'bungkus',
+    isActive: true,
   },
   {
     id: 'prod-5',
@@ -117,6 +184,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 72,
     minStock: 12,
     unit: 'kotak',
+    isActive: true,
   },
   {
     id: 'prod-6',
@@ -129,6 +197,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 18,
     minStock: 4,
     unit: 'renteng',
+    isActive: true,
   },
   {
     id: 'prod-7',
@@ -141,6 +210,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 96,
     minStock: 20,
     unit: 'botol',
+    isActive: true,
   },
   {
     id: 'prod-8',
@@ -153,6 +223,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 120,
     minStock: 24,
     unit: 'bungkus',
+    isActive: true,
   },
   {
     id: 'prod-9',
@@ -165,6 +236,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 80,
     minStock: 20,
     unit: 'bungkus',
+    isActive: true,
   },
   {
     id: 'prod-10',
@@ -177,6 +249,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 15,
     minStock: 3,
     unit: 'bungkus',
+    isActive: true,
   },
   {
     id: 'prod-11',
@@ -189,6 +262,7 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 22,
     minStock: 5,
     unit: 'pouch',
+    isActive: true,
   },
   {
     id: 'prod-12',
@@ -201,5 +275,6 @@ export const INITIAL_POS_PRODUCTS: PosProduct[] = [
     stock: 16,
     minStock: 4,
     unit: 'pouch',
+    isActive: true,
   },
 ];

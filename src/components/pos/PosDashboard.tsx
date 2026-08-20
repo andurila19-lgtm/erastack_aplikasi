@@ -5,7 +5,7 @@ import {
   TrendingUp, DollarSign, ShoppingBag, 
   AlertTriangle, ArrowUpRight, ArrowDownRight,
   Package, Plus, Calendar, Clock, CheckCircle2, ChevronRight,
-  Sparkles, Zap, Award
+  Sparkles, Zap, Award, BarChart3, Receipt
 } from 'lucide-react';
 import { usePos } from '../../context/PosStoreContext';
 import { Button } from '../ui/Button';
@@ -43,12 +43,8 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
     return products.filter(p => p.stock <= p.minStock);
   }, [products]);
 
-  const totalStockCount = useMemo(() => {
-    return products.reduce((sum, p) => sum + p.stock, 0);
-  }, [products]);
-
   const recentTxs = useMemo(() => {
-    return transactions.slice(0, 5);
+    return transactions.slice(0, 6);
   }, [transactions]);
 
   const weeklySalesData = useMemo(() => {
@@ -118,16 +114,22 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
     return `Rp ${val}`;
   };
 
+  const formatTime = (isoString: string) => {
+    const d = new Date(isoString);
+    return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
     <div className="pos-dashboard-root">
+      {/* Header Banner */}
       <div className="pos-dash-header">
         <div className="dash-greeting-box">
           <div className="dash-store-badge">
             <span className="dash-live-dot" />
-            <span>Toko Siap Melayani (100% Offline)</span>
+            <span>Terminal Siap • SQLite Lokal</span>
           </div>
           <h1 className="dash-title">{storeProfile.storeName}</h1>
-          <p className="dash-subtitle">Selamat bertugas, <strong>{activeCashier}</strong>. Berikut rangkuman performa usaha hari ini.</p>
+          <p className="dash-subtitle">Selamat bertugas, <strong>{activeCashier}</strong>. Ringkasan operasional toko hari ini.</p>
         </div>
 
         <div className="dash-quick-actions">
@@ -135,6 +137,7 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
             type="button" 
             className="dash-action-btn primary"
             onClick={() => onNavigate('register')}
+            aria-label="Buka Kasir"
           >
             <ShoppingBag size={18} />
             <span>Buka Kasir (F9)</span>
@@ -143,6 +146,7 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
             type="button" 
             className="dash-action-btn secondary"
             onClick={() => onNavigate('inventory')}
+            aria-label="Tambah Produk"
           >
             <Plus size={18} />
             <span>Tambah Barang</span>
@@ -150,165 +154,146 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div className="dash-kpi-grid">
-        <div className="kpi-card revenue">
-          <div className="kpi-header">
-            <span className="kpi-label">Omset Penjualan Hari Ini</span>
-            <div className="kpi-icon-box blue">
-              <TrendingUp size={20} />
+      {/* KPI METRICS (Adaptive 4 Desktop, 2x2 Tablet, 2 Mobile) */}
+      <section className="dash-kpi-section" aria-label="Ringkasan Kinerja Hari Ini">
+        {/* KPI 1: Omset Penjualan */}
+        <div className="dash-kpi-card kpi-primary">
+          <div className="kpi-top-row">
+            <span className="kpi-title">Omset Penjualan Hari Ini</span>
+            <div className="kpi-icon-pill blue">
+              <DollarSign size={18} />
             </div>
           </div>
-          <div className="kpi-value-row">
-            <h2 className="kpi-value">{formatRupiah(metrics.revenue)}</h2>
-          </div>
-          <div className="kpi-footer">
-            <span className="kpi-badge positive">
-              <ArrowUpRight size={14} /> {metrics.txCount} Transaksi
-            </span>
-            <span className="kpi-subtext">Perhitungan lokal real-time</span>
-          </div>
+          <strong className="kpi-value-text tabular-nums">{formatRupiah(metrics.revenue)}</strong>
+          <span className="kpi-hint">Shift berjalan • {metrics.txCount} transaksi</span>
         </div>
 
-        <div className="kpi-card profit">
-          <div className="kpi-header">
-            <span className="kpi-label">Estimasi Laba Bersih</span>
-            <div className="kpi-icon-box green">
-              <DollarSign size={20} />
+        {/* KPI 2: Estimasi Laba Kotor */}
+        <div className="dash-kpi-card kpi-secondary">
+          <div className="kpi-top-row">
+            <span className="kpi-title">Estimasi Laba Kotor</span>
+            <div className="kpi-icon-pill green">
+              <TrendingUp size={18} />
             </div>
           </div>
-          <div className="kpi-value-row">
-            <h2 className="kpi-value text-emerald">{formatRupiah(metrics.profit)}</h2>
-          </div>
-          <div className="kpi-footer">
-            <span className="kpi-badge neutral">
-              Margin {metrics.revenue > 0 ? Math.round((metrics.profit / metrics.revenue) * 100) : 0}%
-            </span>
-            <span className="kpi-subtext">Omset dikurangi modal pokok</span>
-          </div>
+          <strong className="kpi-value-text text-emerald tabular-nums">{formatRupiah(metrics.profit)}</strong>
+          <span className="kpi-hint">Berdasarkan HPP modal barang</span>
         </div>
 
-        <div className="kpi-card basket">
-          <div className="kpi-header">
-            <span className="kpi-label">Rata-Rata per Nota</span>
-            <div className="kpi-icon-box purple">
-              <ShoppingBag size={20} />
+        {/* KPI 3: Jumlah Nota Transaksi */}
+        <div className="dash-kpi-card kpi-tertiary">
+          <div className="kpi-top-row">
+            <span className="kpi-title">Total Transaksi</span>
+            <div className="kpi-icon-pill orange">
+              <Receipt size={18} />
             </div>
           </div>
-          <div className="kpi-value-row">
-            <h2 className="kpi-value">{formatRupiah(metrics.avgBasket)}</h2>
-          </div>
-          <div className="kpi-footer">
-            <span className="kpi-badge neutral">
-              {metrics.txCount} Pembeli
-            </span>
-            <span className="kpi-subtext">Nilai belanja rata-rata</span>
-          </div>
+          <strong className="kpi-value-text tabular-nums">{metrics.txCount} Nota</strong>
+          <span className="kpi-hint">Tercatat ke database lokal</span>
         </div>
 
-        <div className="kpi-card inventory">
-          <div className="kpi-header">
-            <span className="kpi-label">Status Inventaris Barang</span>
-            <div className="kpi-icon-box amber">
-              <Package size={20} />
+        {/* KPI 4: Rata-rata Keranjang */}
+        <div className="dash-kpi-card kpi-quaternary">
+          <div className="kpi-top-row">
+            <span className="kpi-title">Rata-rata Nilai Nota</span>
+            <div className="kpi-icon-pill purple">
+              <BarChart3 size={18} />
             </div>
           </div>
-          <div className="kpi-value-row">
-            <h2 className="kpi-value">{products.length} SKU</h2>
-          </div>
-          <div className="kpi-footer">
-            {lowStockProducts.length > 0 ? (
-              <span className="kpi-badge warning">
-                <AlertTriangle size={14} /> {lowStockProducts.length} Stok Menipis
-              </span>
-            ) : (
-              <span className="kpi-badge positive">
-                <CheckCircle2 size={14} /> Stok Aman ({totalStockCount} Unit)
-              </span>
-            )}
-            <button 
-              type="button" 
-              className="kpi-link-btn"
-              onClick={() => onNavigate('inventory')}
-            >
-              Lihat Stok →
-            </button>
-          </div>
+          <strong className="kpi-value-text tabular-nums">{formatRupiah(metrics.avgBasket)}</strong>
+          <span className="kpi-hint">Rata-rata per pelanggan</span>
         </div>
-      </div>
+      </section>
 
-      <div className="dash-content-grid">
-        <div className="dash-card chart-card">
-          <div className="dash-card-header">
-            <div className="card-title-group">
-              <h3 className="card-title">Tren Penjualan 7 Hari Terakhir</h3>
-              <p className="card-desc">Grafik akumulasi omset harian kasir</p>
+      {/* LOW STOCK WARNING (If any) */}
+      {lowStockProducts.length > 0 && (
+        <div className="dash-alert-banner">
+          <div className="alert-banner-left">
+            <AlertTriangle size={20} className="alert-banner-icon" />
+            <div>
+              <strong>Peringatan {lowStockProducts.length} Produk Mendekati Batas Stok Kritis</strong>
+              <p>Segera lakukan pemesanan restock barang ke supplier.</p>
+            </div>
+          </div>
+          <button 
+            type="button" 
+            className="alert-banner-btn"
+            onClick={() => onNavigate('inventory')}
+          >
+            <span>Cek Stok</span>
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      )}
+
+      {/* 2-COLUMN ANALYTICS GRID (Chart + Top Selling & Recent Transactions) */}
+      <div className="dash-analytics-grid">
+        {/* Weekly Sales Chart Card */}
+        <div className="dash-chart-card">
+          <div className="chart-card-header">
+            <div className="chart-header-left">
+              <strong className="chart-card-title">Tren Penjualan 7 Hari Terakhir</strong>
+              <span className="chart-card-sub">Akumulasi omset harian tercatat</span>
             </div>
             <button 
               type="button" 
-              className="card-action-link"
+              className="chart-header-link"
               onClick={() => onNavigate('reports')}
             >
-              Laporan Lengkap →
+              <span>Laporan Penuh</span>
+              <ChevronRight size={14} />
             </button>
           </div>
 
-          <div className="weekly-bar-chart">
-            {weeklySalesData.map((item, idx) => {
-              const heightPct = Math.max(8, Math.round((item.amount / maxWeeklyAmount) * 100));
+          <div className="weekly-bars-container">
+            {weeklySalesData.map((day, idx) => {
+              const heightPct = Math.max(8, Math.round((day.amount / maxWeeklyAmount) * 100));
               const isToday = idx === weeklySalesData.length - 1;
+
               return (
-                <div key={item.dateStr} className={`chart-col ${isToday ? 'is-today' : ''}`}>
-                  <div className="chart-bar-wrap">
+                <div key={idx} className={`weekly-bar-col ${isToday ? 'is-today' : ''}`}>
+                  <div className="bar-track">
                     <div 
-                      className="chart-bar" 
+                      className="bar-fill" 
                       style={{ height: `${heightPct}%` }}
-                      title={`${item.label}: ${formatRupiah(item.amount)}`}
+                      title={`${day.label}: ${formatRupiah(day.amount)}`}
                     >
-                      {item.amount > 0 && (
-                        <span className="bar-val-tooltip">{formatShortRupiah(item.amount)}</span>
+                      {day.amount > 0 && (
+                        <span className="bar-tooltip tabular-nums">{formatShortRupiah(day.amount)}</span>
                       )}
                     </div>
                   </div>
-                  <span className="chart-col-label">{item.label}</span>
+                  <span className="bar-day-label">{day.label}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="dash-card top-products-card">
-          <div className="dash-card-header">
-            <div className="card-title-group">
-              <h3 className="card-title">Produk Paling Laris</h3>
-              <p className="card-desc">Barang paling sering dibeli pelanggan</p>
-            </div>
-            <Award size={18} className="text-amber" />
+        {/* Top Selling Products */}
+        <div className="dash-topsellers-card">
+          <div className="chart-card-header">
+            <strong className="chart-card-title">Produk Terlaris</strong>
+            <span className="chart-card-sub">Berdasarkan kuantitas terjual</span>
           </div>
 
-          <div className="top-products-list">
+          <div className="topsellers-list">
             {topSellingProducts.length === 0 ? (
-              <div className="empty-dash-box">
+              <div className="empty-topsellers">
                 <Package size={28} className="text-muted" />
-                <p>Belum ada transaksi penjualan.</p>
-                <button 
-                  type="button" 
-                  className="btn-start-tx"
-                  onClick={() => onNavigate('register')}
-                >
-                  Mulai Transaksi Kasir
-                </button>
+                <span>Belum ada data penjualan tercatat.</span>
               </div>
             ) : (
-              topSellingProducts.map((p, idx) => (
-                <div key={p.name} className="top-product-row">
-                  <span className={`rank-badge rank-${idx + 1}`}>{idx + 1}</span>
-                  <div className="product-info-col">
-                    <strong className="p-name">{p.name}</strong>
-                    <span className="p-cat">{p.category}</span>
+              topSellingProducts.map((p, i) => (
+                <div key={i} className="topseller-item">
+                  <div className="topseller-rank">{i + 1}</div>
+                  <div className="topseller-info">
+                    <strong className="topseller-name">{p.name}</strong>
+                    <span className="topseller-cat">{p.category}</span>
                   </div>
-                  <div className="product-sales-col">
-                    <strong className="p-qty">{p.qty} terjual</strong>
-                    <span className="p-revenue">{formatRupiah(p.revenue)}</span>
+                  <div className="topseller-metrics">
+                    <strong className="topseller-qty tabular-nums">{p.qty} Terjual</strong>
+                    <span className="topseller-rev tabular-nums">{formatRupiah(p.revenue)}</span>
                   </div>
                 </div>
               ))
@@ -317,93 +302,87 @@ export const PosDashboard: React.FC<PosDashboardProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div className="dash-bottom-grid">
-        <div className="dash-card low-stock-card">
-          <div className="dash-card-header">
-            <div className="card-title-group">
-              <h3 className="card-title">Peringatan Stok Menipis</h3>
-              <p className="card-desc">Barang yang harus segera di-restock</p>
-            </div>
-            <span className="alert-count-pill">{lowStockProducts.length} Barang</span>
+      {/* RECENT TRANSACTIONS (Responsive Table on Desktop/Tablet, Cards on Mobile) */}
+      <section className="dash-recent-section" aria-label="Transaksi Penjualan Terakhir">
+        <div className="recent-header-row">
+          <div>
+            <strong className="recent-title">Transaksi Penjualan Terbaru</strong>
+            <span className="recent-sub">Log transaksi tersimpan di perangkat lokal</span>
           </div>
-
-          <div className="low-stock-list">
-            {lowStockProducts.length === 0 ? (
-              <div className="stock-safe-banner">
-                <CheckCircle2 size={24} className="text-emerald" />
-                <div>
-                  <strong>Semua Stok Aman!</strong>
-                  <p>Tidak ada barang yang berada di bawah batas minimum.</p>
-                </div>
-              </div>
-            ) : (
-              lowStockProducts.slice(0, 4).map(prod => (
-                <div key={prod.id} className="low-stock-item">
-                  <div className="stock-info">
-                    <strong className="stock-prod-name">{prod.name}</strong>
-                    <span className="stock-sku">{prod.sku} • {prod.category}</span>
-                  </div>
-                  <div className="stock-badge-group">
-                    <span className="stock-pill warning">
-                      Sisa: {prod.stock} {prod.unit}
-                    </span>
-                    <button 
-                      type="button" 
-                      className="btn-quick-edit"
-                      onClick={() => onNavigate('inventory')}
-                    >
-                      Tambah
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+          <button 
+            type="button" 
+            className="chart-header-link"
+            onClick={() => onNavigate('reports')}
+          >
+            <span>Lihat Semua ({transactions.length})</span>
+            <ChevronRight size={14} />
+          </button>
         </div>
 
-        <div className="dash-card recent-tx-card">
-          <div className="dash-card-header">
-            <div className="card-title-group">
-              <h3 className="card-title">Transaksi Kasir Terbaru</h3>
-              <p className="card-desc">5 struk nota penjualan terakhir</p>
+        {recentTxs.length === 0 ? (
+          <div className="empty-recent-box">
+            <Receipt size={36} className="text-muted" />
+            <p>Belum ada transaksi yang dicatat.</p>
+          </div>
+        ) : (
+          <>
+            {/* Desktop & Tablet Table */}
+            <div className="recent-table-wrap">
+              <table className="recent-table">
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>No. Nota Invoice</th>
+                    <th>Kasir</th>
+                    <th>Metode</th>
+                    <th>Total Belanja</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentTxs.map((tx) => (
+                    <tr key={tx.id}>
+                      <td className="tabular-nums">{formatTime(tx.timestamp)}</td>
+                      <td>
+                        <strong>{tx.invoiceNo}</strong>
+                      </td>
+                      <td>{tx.cashierName}</td>
+                      <td>
+                        <span className="method-tag">{tx.paymentMethod}</span>
+                      </td>
+                      <td className="tabular-nums">
+                        <strong>{formatRupiah(tx.finalAmount)}</strong>
+                      </td>
+                      <td>
+                        <span className="status-pill-success">✓ Selesai</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <button 
-              type="button" 
-              className="card-action-link"
-              onClick={() => onNavigate('reports')}
-            >
-              Semua Riwayat →
-            </button>
-          </div>
 
-          <div className="recent-tx-list">
-            {recentTxs.length === 0 ? (
-              <div className="empty-dash-box">
-                <Clock size={28} className="text-muted" />
-                <p>Belum ada nota transaksi yang dicatat.</p>
-              </div>
-            ) : (
-              recentTxs.map(tx => {
-                const txTime = new Date(tx.timestamp).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                return (
-                  <div key={tx.id} className="recent-tx-row">
-                    <div className="tx-meta-col">
-                      <strong className="tx-inv">{tx.invoiceNo}</strong>
-                      <span className="tx-time">{txTime} • Kasir: {tx.cashierName}</span>
+            {/* Mobile Card List */}
+            <div className="recent-mobile-list">
+              {recentTxs.map((tx) => (
+                <div key={tx.id} className="recent-mobile-card">
+                  <div className="rm-card-top">
+                    <div>
+                      <strong className="rm-invoice">{tx.invoiceNo}</strong>
+                      <span className="rm-time tabular-nums">{formatTime(tx.timestamp)} • {tx.cashierName}</span>
                     </div>
-                    <div className="tx-amount-col">
-                      <strong className="tx-total">{formatRupiah(tx.finalAmount)}</strong>
-                      <span className={`tx-method-pill ${tx.paymentMethod.toLowerCase()}`}>
-                        {tx.paymentMethod}
-                      </span>
-                    </div>
+                    <span className="status-pill-success">✓ Selesai</span>
                   </div>
-                );
-              })
-            )}
-          </div>
-        </div>
-      </div>
+                  <div className="rm-card-bottom">
+                    <span className="method-tag">{tx.paymentMethod}</span>
+                    <strong className="rm-amount tabular-nums">{formatRupiah(tx.finalAmount)}</strong>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </section>
     </div>
   );
 };

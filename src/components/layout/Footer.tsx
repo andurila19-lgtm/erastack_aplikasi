@@ -16,41 +16,39 @@ export const Footer: React.FC = () => {
               <BrandLogo variant="full" size="md" />
             </div>
             <p className="footer-manifesto">
-              Aplikasi kasir pintar mandiri untuk memajukan toko, warung, kafe, dan UMKM di seluruh Indonesia. Gratis digunakan selamanya tanpa biaya sewa bulanan.
+              Platform Point of Sale & manajemen bisnis modern dengan pendekatan offline-first untuk operasional kasir, inventaris, dan pelaporan yang mandiri.
             </p>
             <div className="footer-status-pill">
-              <StatusDot status="ready" label="Aplikasi Kasir Aktif • Bebas Kuota" size="sm" />
+              <StatusDot status="ready" label="Status: Active Development" size="sm" />
             </div>
           </div>
 
           <div className="footer-col">
-            <h4 className="footer-col-title">Produk Kasir</h4>
+            <h4 className="footer-col-title">Aplikasi & Modul</h4>
             <ul className="footer-links">
-              <li><Link href="/products/pos">ERASTACK POS (PC & HP)</Link></li>
-              <li><Link href="/products">Katalog Aplikasi Toko</Link></li>
-              <li><Link href="/downloads">Unduh Installer Windows</Link></li>
-              <li><Link href="/downloads">Unduh APK Android</Link></li>
-              <li><Link href="/downloads">Cetak Barcode & Label</Link></li>
+              <li><Link href="/pos">Web POS Terminal</Link></li>
+              <li><Link href="/products/pos">EraStack Desktop & Mobile</Link></li>
+              <li><Link href="/products">Katalog Software</Link></li>
+              <li><Link href="/downloads">Pusat Unduhan</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4 className="footer-col-title">Fitur & Panduan</h4>
+            <h4 className="footer-col-title">Dokumentasi & Fitur</h4>
             <ul className="footer-links">
-              <li><Link href="/ai-lab">Asisten AI Toko</Link></li>
-              <li><Link href="/projects">Kisah Sukses Pengusaha</Link></li>
-              <li><Link href="/docs">Buku Panduan Kasir</Link></li>
-              <li><Link href="/releases">Catatan Pembaruan Sistem</Link></li>
+              <li><Link href="/projects">Solusi Industri</Link></li>
+              <li><Link href="/ai-lab">Local AI Assistant</Link></li>
+              <li><Link href="/docs">Dokumentasi Teknis</Link></li>
+              <li><Link href="/releases">Catatan Rilis (Changelog)</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4 className="footer-col-title">Tentang ERASTACK</h4>
+            <h4 className="footer-col-title">Tentang EraStack</h4>
             <ul className="footer-links">
-              <li><Link href="/about">Visi & Komitmen Kami</Link></li>
-              <li><Link href="/about">100% Bebas Biaya Sewa</Link></li>
-              <li><Link href="/about">Kedaulatan Data Usaha</Link></li>
-              <li><a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">Konsultasi via WhatsApp</a></li>
+              <li><Link href="/about">Arsitektur & Prinsip</Link></li>
+              <li><Link href="/about#principles">Kedaulatan Data Lokal</Link></li>
+              <li><Link href="/docs#installation">Panduan Instalasi</Link></li>
             </ul>
           </div>
         </div>
@@ -58,12 +56,12 @@ export const Footer: React.FC = () => {
         <div className="footer-bottom">
           <div className="footer-bottom-left">
             <span className="footer-copy">
-              © {currentYear} ERASTACK POS. Memajukan Usaha & UMKM di Seluruh Indonesia.
+              © {currentYear} ERASTACK. Offline-First Point of Sale & Business Platform.
             </span>
           </div>
 
           <div className="footer-bottom-right">
-            <span className="footer-tech-tag">100% Offline • Bebas Kuota • Aman</span>
+            <span className="footer-tech-tag">Offline-First • SQLite Storage • Local AI</span>
           </div>
         </div>
       </div>

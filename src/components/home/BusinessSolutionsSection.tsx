@@ -17,57 +17,49 @@ interface SolutionCategory {
 
 const SOLUTIONS: SolutionCategory[] = [
   {
-    id: 'fnb',
-    name: 'Kuliner & F&B',
-    icon: <UtensilsCrossed size={20} />,
-    tagline: 'Kafe, Restoran, Kedai Kopi, & Fast Food',
-    description: 'Manajemen nomor meja, cetak struk pesanan ke dapur (Kitchen Printer), split bill otomatis, dan kontrol stok bahan baku resep makanan.',
-    features: ['Dukungan kitchen & bar printer', 'Modul meja & nomor antrean', 'Resep bahan baku (BOM) otomatis'],
-  },
-  {
     id: 'retail',
-    name: 'Minimarket & Retail',
+    name: 'Retail & Toko Kelontong',
     icon: <Store size={20} />,
-    tagline: 'Toko Kelontong, Swalayan, & Toko Plastik',
-    description: 'Pencarian kilat puluhan ribu SKU barang dengan barcode scanner, harga grosir bertingkat, dan notifikasi stok menipis.',
-    features: ['Scan puluhan ribu barcode instan', 'Harga grosir & kuantitas bertingkat', 'Cetak label barcode harga rak'],
+    tagline: 'Minimarket, Toko Bahan Pokok, & Toko Plastik',
+    description: 'Pencarian cepat katalog SKU menggunakan barcode scanner USB HID, pemotongan stok otomatis, dan pencatatan riwayat nota penjualan.',
+    features: ['Integrasi barcode scanner USB HID', 'Katalog SKU & kategori bertingkat', 'Pencatatan harga modal & harga jual'],
   },
   {
-    id: 'counter',
-    name: 'Counter HP & Gadget',
-    icon: <Smartphone size={20} />,
-    tagline: 'Konter Pulsa, Toko Aksesoris, & Service HP',
-    description: 'Pencatatan nomor seri IMEI, penjualan pulsa & paket data PPOB, serta pelacakan status nota servis handphone pelanggan.',
-    features: ['Pelacakan serial number / IMEI', 'Laporan transaksi pulsa & PPOB', 'Tracking nota tanda terima servis'],
+    id: 'fnb',
+    name: 'Kuliner & Kedai Kopi',
+    icon: <UtensilsCrossed size={20} />,
+    tagline: 'Kafe, Kedai Kopi, & Food Stall',
+    description: 'Antarmuka kasir layar sentuh untuk input pesanan cepat, pencetakan struk thermal 58mm/80mm, dan pemantauan stok bahan baku.',
+    features: ['Navigasi sentuh kategori menu', 'Cetak nota thermal Bluetooth/USB', 'Peringatan stok bahan baku menipis'],
   },
   {
     id: 'fashion',
     name: 'Fashion & Butik',
     icon: <ShoppingBag size={20} />,
     tagline: 'Distro, Toko Pakaian, & Toko Sepatu',
-    description: 'Manajemen produk dengan varian warna, ukuran (S, M, L, XL), cetak barcode mandiri, dan integrasi katalog penjualan digital.',
-    features: ['Matriks varian ukuran & warna', 'Cetak barcode label pakaian', 'Diskon promo member & voucher'],
+    description: 'Manajemen varian produk berdasarkan ukuran dan warna, pencarian SKU fleksibel, dan penerapan diskon promo pada transaksi.',
+    features: ['Struktur varian ukuran & warna', 'Pencarian SKU cepat', 'Penerapan diskon per item & per nota'],
   },
   {
     id: 'services',
-    name: 'Barbershop & Salon',
+    name: 'Jasa & Barbershop',
     icon: <Scissors size={20} />,
-    tagline: 'Pangkas Rambut, Salon Kecantikan, & Spa',
-    description: 'Perhitungan komisi kapster / terapis otomatis per layanan, antrean pelanggan, dan pencatatan riwayat treatment pelanggan setia.',
-    features: ['Bagi hasil & komisi staf otomatis', 'Manajemen reservasi & antrean', 'Database pelanggan & riwayat servis'],
+    tagline: 'Pangkas Rambut, Studio Grooming, & Salon',
+    description: 'Katalog fleksibel untuk item layanan jasa dan produk fisik, pembayaran tunai/non-tunai, dan rekapitulasi shift staf.',
+    features: ['Katalog kombinasi jasa & produk', 'Rekap transaksi per shift kasir', 'Penyimpanan data lokal di perangkat'],
   },
   {
     id: 'workshop',
     name: 'Bengkel & Sparepart',
     icon: <Wrench size={20} />,
-    tagline: 'Bengkel Motor, Mobil, & Toko Onderdil',
-    description: 'Penggabungan biaya jasa mekanik dan sparepart dalam satu nota, pencatatan nomor polisi kendaraan, dan pengingat servis berkala.',
-    features: ['Nota gabungan jasa servis + part', 'Catatan nopol & riwayat kendaraan', 'Manajemen komisi mekanik'],
+    tagline: 'Bengkel Motor & Toko Onderdil',
+    description: 'Struk transaksi yang menggabungkan biaya jasa servis montir dan suku cadang dalam satu nota pembayaran terstruktur.',
+    features: ['Nota rincian jasa & suku cadang', 'Audit mutasi stok masuk dan keluar', 'Ekspor rekap laporan penjualan'],
   },
 ];
 
 export const BusinessSolutionsSection: React.FC = () => {
-  const [selectedId, setSelectedId] = useState<string>('fnb');
+  const [selectedId, setSelectedId] = useState<string>('retail');
 
   const selectedSolution = SOLUTIONS.find((s) => s.id === selectedId) || SOLUTIONS[0];
 
@@ -75,12 +67,12 @@ export const BusinessSolutionsSection: React.FC = () => {
     <section className="solutions-section" id="solutions">
       <div className="container solutions-container">
         <div className="section-head-center">
-          <Badge variant="cyan" size="sm">Solusi Spesifik Industri</Badge>
+          <Badge variant="cyan" size="sm">Skenario Operasional</Badge>
           <h2 className="section-main-title">
-            Dirancang Khusus Sesuai Karakteristik Usaha Anda
+            Disesuaikan dengan Karakteristik Operasional Bisnis
           </h2>
           <p className="section-main-subtitle">
-            Setiap industri memiliki alur transaksi yang berbeda. Pilih jenis bisnis Anda untuk melihat fitur kasir yang relevan.
+            Setiap sektor usaha memiliki kebutuhan transaksi yang berbeda. Pilih bidang usaha untuk melihat implementasi alur kerja terkait.
           </p>
         </div>
 
@@ -129,28 +121,28 @@ export const BusinessSolutionsSection: React.FC = () => {
                 <span className="mockup-dot red" />
                 <span className="mockup-dot yellow" />
                 <span className="mockup-dot green" />
-                <span className="mockup-bar-title">{selectedSolution.name} • Preset Workflow</span>
+                <span className="mockup-bar-title">{selectedSolution.name} • Alur Kerja</span>
               </div>
               <div className="mockup-content-body">
                 <div className="workflow-step">
                   <span className="step-num">01</span>
                   <div className="step-info">
-                    <span className="step-title">Setup Katalog & Kategori</span>
-                    <span className="step-desc">Impor data produk via Excel atau input langsung</span>
+                    <span className="step-title">Konfigurasi Katalog Produk</span>
+                    <span className="step-desc">Input data SKU, nama item, harga modal, dan barcode</span>
                   </div>
                 </div>
                 <div className="workflow-step">
                   <span className="step-num">02</span>
                   <div className="step-info">
-                    <span className="step-title">Hubungkan Mesin & Printer</span>
-                    <span className="step-desc">Auto-detect printer kasir thermal USB & Bluetooth</span>
+                    <span className="step-title">Koneksi Hardware Kasir</span>
+                    <span className="step-desc">Hubungkan printer thermal USB/Bluetooth dan barcode scanner</span>
                   </div>
                 </div>
                 <div className="workflow-step">
                   <span className="step-num">03</span>
                   <div className="step-info">
-                    <span className="step-title">Mulai Jualan 100% Offline</span>
-                    <span className="step-desc">Scan barcode kilat tanpa takut internet gangguan</span>
+                    <span className="step-title">Operasi Kasir Offline</span>
+                    <span className="step-desc">Transaksi diproses dan dicatat langsung ke database SQLite lokal</span>
                   </div>
                 </div>
               </div>

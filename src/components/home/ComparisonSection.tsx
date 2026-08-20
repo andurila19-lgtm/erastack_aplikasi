@@ -1,57 +1,44 @@
 import React from 'react';
-import { Check, X } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import './ComparisonSection.css';
 
 interface ComparisonRow {
-  aspect: string;
-  erastack: string;
-  isEraGood: boolean;
-  cloudPos: string;
-  isCloudGood: boolean;
-  manualPos: string;
+  parameter: string;
+  offlineFirst: string;
+  cloudBased: string;
+  traditionalManual: string;
 }
 
 const COMPARISON_DATA: ComparisonRow[] = [
   {
-    aspect: 'Keandalan Offline (Tanpa Internet)',
-    erastack: '100% Beroperasi Normal di SQLite Lokal',
-    isEraGood: true,
-    cloudPos: 'Macet, error, & tidak bisa cetak nota',
-    isCloudGood: false,
-    manualPos: 'Bisa, tapi lambat & rawan salah hitung',
+    parameter: 'Ketergantungan Jaringan',
+    offlineFirst: 'Mandiri (seluruh data & logika transaksi di SQLite lokal)',
+    cloudBased: 'Tergantung koneksi internet untuk autentikasi dan pencatatan',
+    traditionalManual: 'Tidak membutuhkan jaringan internet',
   },
   {
-    aspect: 'Model Pembayaran & Lisensi',
-    erastack: 'Lisensi Mandiri / Sekali Beli (Hemat 80%)',
-    isEraGood: true,
-    cloudPos: 'Langganan bulanan terus-menerus',
-    isCloudGood: false,
-    manualPos: 'Beli buku kas terus menerus',
+    parameter: 'Penyimpanan Data',
+    offlineFirst: 'Tersimpan di perangkat lokal pengguna (kendali penuh)',
+    cloudBased: 'Tersimpan di server penyedia cloud pihak ketiga',
+    traditionalManual: 'Buku catatan fisik atau mesin kasir konvensional',
   },
   {
-    aspect: 'Keamanan & Kedaulatan Data Usaha',
-    erastack: 'Data 100% tersimpan aman di PC/HP lokal Anda',
-    isEraGood: true,
-    cloudPos: 'Tersimpan di server pihak ketiga',
-    isCloudGood: false,
-    manualPos: 'Buku nota rentan hilang/rusak/terbakar',
+    parameter: 'Latensi Operasi Kasir',
+    offlineFirst: 'Eksekusi memori lokal tanpa delay request HTTP',
+    cloudBased: 'Dipengaruhi kecepatan dan stabilitas koneksi internet',
+    traditionalManual: 'Pencatatan manual dengan potensi kelalaian hitung',
   },
   {
-    aspect: 'Kecerdasan Buatan (AI Business Assistant)',
-    erastack: 'Local SLM On-Device Gratis (Zero Token Cost)',
-    isEraGood: true,
-    cloudPos: 'Bayar token API mahal / Tidak tersedia',
-    isCloudGood: false,
-    manualPos: 'Tidak ada analisa data otomatis',
+    parameter: 'Pencadangan Data',
+    offlineFirst: 'Ekspor berkas .sqlite mandiri ke media eksternal',
+    cloudBased: 'Pencadangan otomatis di server cloud penyedia',
+    traditionalManual: 'Tidak ada backup otomatis',
   },
   {
-    aspect: 'Kecepatan Scan Barcode & Checkout',
-    erastack: 'Ultra Cepat (< 15ms per barang)',
-    isEraGood: true,
-    cloudPos: '1000ms - 3000ms (tergantung sinyal)',
-    isCloudGood: false,
-    manualPos: 'Sangat lambat (menulis manual)',
+    parameter: 'Integrasi Hardware',
+    offlineFirst: 'Koneksi langsung USB HID scanner & printer ESC/POS',
+    cloudBased: 'Memerlukan bridge driver atau perantara browser web',
+    traditionalManual: 'Peralatan terpisah tanpa integrasi sistematis',
   },
 ];
 
@@ -60,12 +47,12 @@ export const ComparisonSection: React.FC = () => {
     <section className="comparison-section">
       <div className="container comparison-container">
         <div className="section-head-center">
-          <Badge variant="cyan" size="sm">Komparasi Solusi</Badge>
+          <Badge variant="cyan" size="sm">Perbandingan Pendekatan</Badge>
           <h2 className="section-main-title">
-            Mengapa Pengusaha Memilih ERASTACK POS Dibandingkan Aplikasi Kasir Lain?
+            Perbandingan Arsitektur: Offline-First vs Cloud POS
           </h2>
           <p className="section-main-subtitle">
-            Bandingkan langsung keunggulan arsitektur kami untuk menjamin kelancaran kasir Anda seumur hidup.
+            Tinjauan objektif perbedaan teknis antara sistem kasir lokal mandiri dan sistem berbasis cloud murni.
           </p>
         </div>
 
@@ -73,35 +60,30 @@ export const ComparisonSection: React.FC = () => {
           <table className="comparison-table">
             <thead>
               <tr>
-                <th className="col-aspect">Parameter Keunggulan</th>
+                <th className="col-aspect">Parameter Arsitektur</th>
                 <th className="col-erastack">
                   <div className="table-header-erastack">
-                    <span className="erastack-brand-tag">ERASTACK POS</span>
-                    <Badge variant="lime" size="sm">Rekomendasi Utama</Badge>
+                    <span className="erastack-brand-tag">EraStack (Offline-First)</span>
                   </div>
                 </th>
-                <th className="col-other">Aplikasi Kasir Cloud Biasa</th>
-                <th className="col-manual">Mesin Kasir / Buku Manual</th>
+                <th className="col-other">Sistem Cloud POS Murni</th>
+                <th className="col-manual">Pencatatan Manual / Standalone</th>
               </tr>
             </thead>
             <tbody>
               {COMPARISON_DATA.map((row, idx) => (
                 <tr key={idx}>
-                  <td className="cell-aspect">{row.aspect}</td>
+                  <td className="cell-aspect">
+                    <strong>{row.parameter}</strong>
+                  </td>
                   <td className="cell-erastack">
-                    <div className="cell-content-good">
-                      <Check size={16} className="icon-check" />
-                      <span>{row.erastack}</span>
-                    </div>
+                    <span className="cell-text-erastack">{row.offlineFirst}</span>
                   </td>
                   <td className="cell-cloud">
-                    <div className="cell-content-bad">
-                      <X size={16} className="icon-cross" />
-                      <span>{row.cloudPos}</span>
-                    </div>
+                    <span className="cell-text-other">{row.cloudBased}</span>
                   </td>
                   <td className="cell-manual">
-                    <span>{row.manualPos}</span>
+                    <span className="cell-text-other">{row.traditionalManual}</span>
                   </td>
                 </tr>
               ))}

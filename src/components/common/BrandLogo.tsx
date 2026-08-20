@@ -20,6 +20,9 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           alt="ERASTACK Icon"
           className="brand-logo-icon-img"
           loading="eager"
+          width={size === 'lg' ? 38 : size === 'md' ? 30 : 26}
+          height={size === 'lg' ? 38 : size === 'md' ? 30 : 26}
+          style={{ height: size === 'lg' ? '38px' : size === 'md' ? '30px' : '26px', width: 'auto' }}
         />
       )}
       {variant !== 'icon' && (
@@ -29,6 +32,9 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
             alt="ERASTACK"
             className="brand-wordmark-img"
             loading="eager"
+            width={size === 'lg' ? 120 : size === 'md' ? 100 : 85}
+            height={size === 'lg' ? 24 : size === 'md' ? 20 : 18}
+            style={{ height: size === 'lg' ? '24px' : size === 'md' ? '20px' : '18px', width: 'auto' }}
           />
         </div>
       )}

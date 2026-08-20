@@ -49,7 +49,8 @@
   flex-direction: column;
   gap: var(--space-2);
   width: 100%;
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
 }
 
 @media (min-width: 600px) {
@@ -67,7 +68,7 @@
   background-color: #FFFFFF;
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: var(--radius-full);
-  padding: 6px 14px;
+  padding: 8px 16px;
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
@@ -75,13 +76,13 @@
 }
 
 .downloads-cards-section {
-  padding: var(--space-8) 0 var(--space-14);
+  padding: var(--space-12) 0 var(--space-16);
   background-color: var(--bg-canvas);
 }
 
 @media (min-width: 768px) {
   .downloads-cards-section {
-    padding: var(--space-10) 0 var(--space-18);
+    padding: var(--space-16) 0 var(--space-24);
   }
 }
 

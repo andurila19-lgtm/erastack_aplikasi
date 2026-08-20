@@ -96,6 +96,12 @@ ERASTACK/
 
 ## 5. Larangan Keras untuk Seluruh Agen (Agent Prohibitions)
 
+- ❌ **Do not rewrite existing working architecture without justification.**
+- ❌ **Do not invent features.**
+- ❌ **Do not invent business metrics.**
+- ❌ **Do not create fake testimonials.**
+- ❌ **Do not duplicate existing components.**
+- ❌ **Inspect existing implementation before modifying it.**
 - ❌ **Dilarang Mengubah Requirement Sepihak:** Menambah atau menghapus fitur bisnis tanpa arahan eksplisit pengguna.
 - ❌ **Dilarang Menghasilkan AI Slop:** Mengabaikan standar `QUALITY.md` (desain generik, kartu bertumpuk, copywriting klise).
 - ❌ **Dilarang Membangun Arsitektur Online-Only:** Menjadikan koneksi internet sebagai syarat transaksi POS atau akses data lokal.

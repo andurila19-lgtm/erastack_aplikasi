@@ -79,16 +79,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
 
       <div className="product-specs-bar">
         <div className="spec-metric">
-          <span className="spec-metric-label">Ukuran File:</span>
+          <span className="spec-metric-label">Ukuran:</span>
           <span className="spec-metric-value">{product.size}</span>
         </div>
         <div className="spec-metric">
-          <span className="spec-metric-label">Mode Jaringan:</span>
-          <span className="spec-metric-value text-emerald">100% Offline</span>
+          <span className="spec-metric-label">Arsitektur:</span>
+          <span className="spec-metric-value text-emerald">{product.architecture}</span>
         </div>
         <div className="spec-metric">
-          <span className="spec-metric-label">Biaya Sewa:</span>
-          <span className="spec-metric-value text-emerald">Rp 0 / Selamanya</span>
+          <span className="spec-metric-label">Lisensi:</span>
+          <span className="spec-metric-value">{product.license}</span>
         </div>
       </div>
 

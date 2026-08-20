@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { 
   Bot, TrendingUp, AlertTriangle, Clock, 
   CheckCircle2, HardDrive, ShieldCheck, 
-  Send, RefreshCw, Download, ArrowRight, 
-  Store, ShoppingCart, DollarSign, Users, Award
+  Send, RefreshCw, Play, ArrowRight, 
+  DollarSign, Users, Award, Database, Cpu
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { Badge } from '../components/ui/Badge';
@@ -30,86 +30,69 @@ const PRESET_PROMPTS: PresetPrompt[] = [
   {
     id: 'omset-laba',
     icon: <DollarSign size={16} />,
-    label: 'Hitung Laba Hari Ini',
-    query: 'Berapa total omset dan laba bersih toko saya hari ini?',
+    label: 'Ringkasan Laba Hari Ini',
+    query: 'Berapa total omset dan estimasi laba kotor hari ini berdasarkan HPP?',
     response: {
-      title: 'Laporan Omset & Estimasi Laba Bersih (Hari Ini)',
-      summary: 'Hari ini toko mencatat 142 transaksi penjualan dengan total omset kotor Rp 4.850.000. Setelah dipotong harga pokok modal (HPP Rp 3.395.000), estimasi laba bersih toko Anda mencapai Rp 1.455.000 (Margin 30.0%).',
+      title: 'Ringkasan Omset & Estimasi Laba Kotor (Simulasi Hari Ini)',
+      summary: 'Tercatat 142 transaksi penjualan dengan akumulasi omset Rp 4.850.000. Berdasarkan harga pokok modal (HPP Rp 3.395.000), estimasi laba kotor tercatat sebesar Rp 1.455.000 (Margin 30.0%).',
       metrics: [
-        { label: 'Total Transaksi', val: '142 Nota', sub: '+18% vs kemarin' },
+        { label: 'Total Transaksi', val: '142 Nota', sub: 'Shift berjalan' },
         { label: 'Total Omset Kotor', val: 'Rp 4.850.000', sub: 'Rata-rata Rp 34.150/nota' },
-        { label: 'Estimasi Laba Bersih', val: 'Rp 1.455.000', sub: 'Margin sehat 30%' },
-        { label: 'Produk Terlaris', val: 'Kopi Susu Aren (48 Cup)', sub: 'Sumbang 35% omset' },
+        { label: 'Estimasi Laba Kotor', val: 'Rp 1.455.000', sub: 'Margin 30.0%' },
+        { label: 'Produk Terlaris', val: 'Beras Premium 5kg (48x)', sub: 'Sumbang 35% omset' },
       ],
-      actionAdvice: 'Penjualan minuman kopi susu aren meningkat pesat. Pastikan persediaan cup 16oz dan susu segar tetap aman untuk esok hari.',
+      actionAdvice: 'Penjualan produk kategori sembako meningkat. Pastikan ketersediaan stok fisik mencukupi untuk shift berikutnya.',
     },
   },
   {
     id: 'stok-kritis',
     icon: <AlertTriangle size={16} />,
-    label: 'Cek Stok Menipis',
-    query: 'Barang atau bahan apa saja yang stoknya hampir habis dan harus dibeli?',
+    label: 'Pengecekan Stok Kritis',
+    query: 'Produk apa saja yang kuantitasnya berada di bawah batas minimum?',
     response: {
-      title: 'Peringatan Stok Barang Menipis (Perlu Restock)',
-      summary: 'Ditemukan 3 produk dengan sisa stok di bawah batas aman toko. Jika laju penjualan normal, stok produk berikut diperkirakan akan habis dalam 24 - 36 jam ke depan.',
+      title: 'Audit Kuantitas Stok di Bawah Ambang Batas Minimum',
+      summary: 'Ditemukan 3 item SKU dengan stok di bawah threshold minimum yang telah dikonfigurasi pada sistem inventaris.',
       metrics: [
-        { label: 'Gula Aren Cair 1L', val: 'Sisa 2 Botol', sub: 'Perkiraan habis besok sore' },
-        { label: 'Cup Plastik 16oz', val: 'Sisa 18 Pcs', sub: 'Cukup untuk 3-4 jam' },
-        { label: 'Biji Kopi Arabica 250g', val: 'Sisa 3 Bungkus', sub: 'Batas minimal 5 bungkus' },
-        { label: 'Status Stok Lain', val: 'Aman (185 Item)', sub: 'Tidak ada kendala' },
+        { label: 'Minyak Goreng 2L', val: 'Sisa 2 Pcs', sub: 'Batas minimal 5 pcs' },
+        { label: 'Gula Pasir 1kg', val: 'Sisa 4 Pcs', sub: 'Batas minimal 10 pcs' },
+        { label: 'Kertas Thermal 58mm', val: 'Sisa 3 Roll', sub: 'Batas minimal 5 roll' },
+        { label: 'Status SKU Lain', val: 'Normal (145 SKU)', sub: 'Di atas batas aman' },
       ],
-      actionAdvice: 'Disarankan segera membuat pesanan pembelian (PO) ke pemasok gula aren dan cup plastik hari ini agar tidak kehabisan saat jam sibuk besok.',
+      actionAdvice: 'Lakukan pemesanan restock ke supplier untuk item yang mendekati batas kritis.',
     },
   },
   {
     id: 'jam-ramai',
     icon: <Clock size={16} />,
-    label: 'Kapan Jam Paling Ramai?',
-    query: 'Kapan jam pembeli paling ramai dan toko butuh kasir tambahan?',
+    label: 'Distribusi Waktu Transaksi',
+    query: 'Bagaimana distribusi kepadatan transaksi berdasarkan jam buka toko?',
     response: {
-      title: 'Analisis Waktu Pembeli Paling Ramai (7 Hari Terakhir)',
-      summary: 'Berdasarkan data 1.120 transaksi kasir seminggu terakhir, toko Anda memiliki 2 gelombang jam puncak pelanggan yang sangat padat.',
+      title: 'Distribusi Volume Transaksi Berdasarkan Jam Operasional',
+      summary: 'Berdasarkan agregasi riwayat nota 7 hari terakhir, konsentrasi transaksi tertinggi terjadi pada dua rentang waktu.',
       metrics: [
-        { label: 'Puncak 1 (Makan Siang)', val: '12:00 - 13:30 WIB', sub: 'Rata-rata 36 nota/jam' },
-        { label: 'Puncak 2 (Pulang Kantor)', val: '18:30 - 20:30 WIB', sub: 'Rata-rata 42 nota/jam' },
-        { label: 'Waktu Paling Santai', val: '09:00 - 11:00 WIB', sub: 'Rata-rata 8 nota/jam' },
-        { label: 'Rekomendasi Staf', val: '+1 Kasir di Jam 18:30', sub: 'Pangkas antrean 50%' },
+        { label: 'Periode Siang', val: '12:00 - 13:30', sub: 'Volume transaksi padat' },
+        { label: 'Periode Sore', val: '18:30 - 20:30', sub: 'Volume transaksi tertinggi' },
+        { label: 'Periode Pagi', val: '09:00 - 11:00', sub: 'Volume stabil' },
+        { label: 'Rekomendasi', val: 'Kesiapan Kasir', sub: 'Pastikan laci kas & printer siap' },
       ],
-      actionAdvice: 'Buka 2 meja kasir atau gunakan HP kasir tambahan pada pukul 18:30 untuk mempercepat pembayaran dan mencegah antrean panjang.',
+      actionAdvice: 'Pastikan ketersediaan uang kembalian dan kertas thermal sebelum memasuki jam transaksi padat.',
     },
   },
   {
     id: 'staf-kasir',
     icon: <Users size={16} />,
-    label: 'Performa Kasir & Staf',
-    query: 'Siapa staf kasir yang melayani transaksi paling banyak minggu ini?',
+    label: 'Rekapitulasi Shift Kasir',
+    query: 'Bagaimana ringkasan transaksi per shift kasir pada hari ini?',
     response: {
-      title: 'Rekapitulasi Kinerja & Komisi Kasir Minggu Ini',
-      summary: 'Seluruh transaksi kasir tercatat rapi tanpa selisih uang. Kasir Rina melayani jumlah transaksi tertinggi dengan kecepatan rata-rata 32 detik per pelanggan.',
+      title: 'Rekapitulasi Transaksi per Akun Kasir',
+      summary: 'Seluruh transaksi kasir tercatat dalam log audit lokal. Pembagian transaksi per shift tercatat sebagai berikut:',
       metrics: [
-        { label: 'Kasir Rina (Shift Siang)', val: '468 Nota (Rp 15.8jt)', sub: 'Kecepatan 32 detik/nota' },
-        { label: 'Kasir Dimas (Shift Malam)', val: '412 Nota (Rp 14.2jt)', sub: 'Kecepatan 35 detik/nota' },
-        { label: 'Kasir Maya (Part-Time)', val: '240 Nota (Rp 8.1jt)', sub: 'Kecepatan 38 detik/nota' },
-        { label: 'Selisih Kas Laci', val: 'Rp 0 (Sempurna)', sub: 'Uang fisik vs sistem cocok' },
+        { label: 'Kasir Shift Pagi', val: '78 Nota (Rp 2.650.000)', sub: 'Selesai & rekonsiliasi cocok' },
+        { label: 'Kasir Shift Sore', val: '64 Nota (Rp 2.200.000)', sub: 'Sedang berjalan' },
+        { label: 'Total Gabungan', val: '142 Nota (Rp 4.850.000)', sub: 'Log konsisten' },
+        { label: 'Status Selisih Kas', val: 'Rp 0 (Cocok)', sub: 'Audit fisik sesuai sistem' },
       ],
-      actionAdvice: 'Kinerja kasir sangat akurat tanpa selisih uang. Anda dapat membagikan bonus insentif kasir terbaik langsung dari laporan ini.',
-    },
-  },
-  {
-    id: 'ide-promo',
-    icon: <Award size={16} />,
-    label: 'Rekomendasi Paket Hemat',
-    query: 'Buatkan ide promo paket hemat untuk meningkatkan penjualan akhir pekan',
-    response: {
-      title: 'Saran Promo Bundling Produk Berdasarkan Riwayat Belanja',
-      summary: 'Data kasir menunjukkan 64% pembeli Kopi Susu juga memesan Roti Bakar atau Croissant. Menggabungkan kedua menu ini dalam 1 paket promo akan menaikkan nilai belanja rata-rata pembeli.',
-      metrics: [
-        { label: 'Paket Usulan', val: 'Kopi + Roti Bakar', sub: 'Harga promo Rp 35.000' },
-        { label: 'Harga Normal Terpisah', val: 'Rp 42.000', sub: 'Hemat Rp 7.000 bagi pembeli' },
-        { label: 'Margin Keuntungan Toko', val: 'Tetap Sehat (28.5%)', sub: 'HPP modal Rp 25.000' },
-        { label: 'Target Kenaikan Omset', val: '+25% di Akhir Pekan', sub: 'Mendorong belanja dobel' },
-      ],
-      actionAdvice: 'Aktifkan paket promo ini di menu Kasir ERASTACK POS pada hari Jumat - Minggu untuk mendongkrak penjualan makanan pendamping.',
+      actionAdvice: 'Lakukan penutupan shift dan cetak ringkasan kas laci saat pergantian petugas kasir.',
     },
   },
 ];
@@ -125,7 +108,7 @@ export const AiLabPage: React.FC = () => {
     setCustomInput(preset.query);
     setTimeout(() => {
       setIsTyping(false);
-    }, 250);
+    }, 200);
   };
 
   const handleCustomSubmit = (e: React.FormEvent) => {
@@ -136,14 +119,12 @@ export const AiLabPage: React.FC = () => {
     const queryLower = customInput.toLowerCase();
     
     let matched = PRESET_PROMPTS[0];
-    if (queryLower.includes('stok') || queryLower.includes('habis') || queryLower.includes('beli')) {
+    if (queryLower.includes('stok') || queryLower.includes('habis') || queryLower.includes('beli') || queryLower.includes('kritis')) {
       matched = PRESET_PROMPTS[1];
-    } else if (queryLower.includes('jam') || queryLower.includes('ramai') || queryLower.includes('sibuk')) {
+    } else if (queryLower.includes('jam') || queryLower.includes('ramai') || queryLower.includes('waktu')) {
       matched = PRESET_PROMPTS[2];
-    } else if (queryLower.includes('kasir') || queryLower.includes('staf') || queryLower.includes('karyawan')) {
+    } else if (queryLower.includes('kasir') || queryLower.includes('shift') || queryLower.includes('staf')) {
       matched = PRESET_PROMPTS[3];
-    } else if (queryLower.includes('promo') || queryLower.includes('paket') || queryLower.includes('diskon')) {
-      matched = PRESET_PROMPTS[4];
     }
 
     setTimeout(() => {
@@ -152,41 +133,41 @@ export const AiLabPage: React.FC = () => {
         query: customInput,
       });
       setIsTyping(false);
-    }, 300);
+    }, 250);
   };
 
   return (
     <div className="ailab-page-root">
       <SEOHead
-        title="AI Asisten Toko Pintar • Tanya Penjualan & Stok Tanpa Kuota"
-        description="AI Asisten pintar untuk pemilik toko dan bisnis di Indonesia. Tanya omset harian, cek stok menipis, dan dapatkan saran jam paling ramai tanpa butuh internet."
+        title="Local AI Assistant • Analisis Data & Audit Kasir Lokal"
+        description="Pelajari implementasi Local AI Assistant pada ERASTACK POS untuk analisis laporan penjualan dan monitoring stok tanpa pengiriman data ke server cloud."
       />
 
       <section className="ailab-hero-section">
         <div className="container">
           <div className="ailab-hero-content">
-            <Badge variant="lime" size="sm" dot>AI Asisten Bisnis Toko • 100% Bebas Kuota</Badge>
+            <Badge variant="cyan" size="sm" dot>Local AI Dispatcher • On-Device</Badge>
             
             <h1 className="ailab-hero-title">
-              Asisten Pintar Pribadi untuk <span className="highlight-text">Toko & Usaha Anda</span>
+              Local AI Assistant untuk <span className="highlight-text">Analisis Data Bisnis</span>
             </h1>
 
             <p className="ailab-hero-desc">
-              Tanyakan apa saja tentang omset penjualan, barang yang mau habis, hingga jam paling ramai di toko Anda seperti mengobrol dengan manajer toko berpengalaman. Bekerja langsung di komputer & HP kasir Anda tanpa menghabiskan kuota internet.
+              Modul asisten lokal yang bertindak sebagai antarmuka analitik cerdas di atas database SQLite. Dirancang untuk membantu merangkum data penjualan, audit stok, dan evaluasi operasional tanpa mengirimkan data rahasia bisnis ke cloud pihak ketiga.
             </p>
 
             <div className="ailab-benefit-pills">
               <div className="benefit-pill">
                 <HardDrive size={16} className="text-brand" />
-                <span>100% Berjalan Tanpa Kuota Internet</span>
+                <span>Pemrosesan Lokal di Perangkat</span>
               </div>
               <div className="benefit-pill">
                 <ShieldCheck size={16} className="text-emerald" />
-                <span>Data Penjualan Toko 100% Rahasia & Privat</span>
+                <span>Privasi Data Transaksi Terjaga</span>
               </div>
               <div className="benefit-pill">
-                <CheckCircle2 size={16} className="text-purple" />
-                <span>Hasil Analisis Instan dalam Hitungan Detik</span>
+                <Cpu size={16} className="text-purple" />
+                <span>Whitelist Tool Calling Terkontrol</span>
               </div>
             </div>
           </div>
@@ -196,17 +177,17 @@ export const AiLabPage: React.FC = () => {
       <section className="interactive-assistant-section">
         <div className="container">
           <div className="section-head-center">
-            <Badge variant="cyan" size="sm">Coba Langsung di Sini</Badge>
-            <h2 className="section-main-title">Simulasi Tanya Jawab AI Asisten Toko</h2>
+            <Badge variant="lime" size="sm">Simulasi Interaktif</Badge>
+            <h2 className="section-main-title">Simulasi Local Tool Calling</h2>
             <p className="section-main-subtitle">
-              Pilih salah satu pertanyaan di bawah ini untuk melihat bagaimana AI menganalisis data kasir toko Anda.
+              Pilih pertanyaan di bawah untuk melihat bagaimana AI lokal memanggil fungsi alat terdaftar (tool dispatching) terhadap data toko.
             </p>
           </div>
 
           <div className="assistant-workbench-grid">
             <div className="assistant-input-column">
               <div className="preset-card-box">
-                <span className="preset-label">Pilih Pertanyaan Contoh:</span>
+                <span className="preset-label">Pilih Contoh Pertanyaan Operasional:</span>
                 <div className="preset-buttons-list">
                   {PRESET_PROMPTS.map(preset => (
                     <button
@@ -224,14 +205,14 @@ export const AiLabPage: React.FC = () => {
 
               <form onSubmit={handleCustomSubmit} className="chat-input-form">
                 <label htmlFor="custom-query-input" className="chat-label">
-                  Ketik Pertanyaan Toko Anda Sendiri:
+                  Ketik Pertanyaan Simulasi:
                 </label>
                 <div className="chat-input-box">
                   <input
                     id="custom-query-input"
                     type="text"
                     className="chat-field"
-                    placeholder="Contoh: Berapa laba bersih toko saya hari ini?..."
+                    placeholder="Contoh: Bagaimana ringkasan laba kotor hari ini?..."
                     value={customInput}
                     onChange={e => setCustomInput(e.target.value)}
                   />
@@ -244,8 +225,8 @@ export const AiLabPage: React.FC = () => {
               <div className="local-privacy-notice">
                 <ShieldCheck size={18} className="text-emerald" />
                 <div>
-                  <strong>Privasi Usaha 100% Terjamin</strong>
-                  <p>AI memproses data di dalam memori komputer kasir toko Anda sendiri. Data transaksi tidak pernah dikirim ke internet atau pihak lain.</p>
+                  <strong>Arsitektur Tool Whitelist</strong>
+                  <p>Model AI dibatasi hanya dapat mengeksekusi fungsi analitik terdaftar dan dilarang menjalankan raw query SQL bebas.</p>
                 </div>
               </div>
             </div>
@@ -259,23 +240,23 @@ export const AiLabPage: React.FC = () => {
                       <span className="online-beacon" />
                     </div>
                     <div className="agent-info">
-                      <strong className="agent-name">Asisten Toko ERASTACK</strong>
-                      <span className="agent-status">Aktif di Perangkat Kasir (Offline)</span>
+                      <strong className="agent-name">Local AI Assistant Runtime</strong>
+                      <span className="agent-status">On-Device Dispatcher • Sandboxed</span>
                     </div>
                   </div>
-                  <span className="response-time-chip">0.04 Detik</span>
+                  <span className="response-time-chip">Simulasi Lokal</span>
                 </div>
 
                 <div className="screen-chat-area">
                   <div className="chat-bubble user-bubble">
-                    <span className="bubble-sender">Pertanyaan Pemilik Toko:</span>
+                    <span className="bubble-sender">Query Pengguna:</span>
                     <p className="bubble-text">"{selectedPrompt.query}"</p>
                   </div>
 
                   {isTyping ? (
                     <div className="ai-loading-box">
                       <RefreshCw size={18} className="typing-spin" />
-                      <span>Asisten sedang membaca rekap data transaksi toko Anda...</span>
+                      <span>Mengeksekusi tool dispatcher terhadap database lokal...</span>
                     </div>
                   ) : (
                     <div className="chat-bubble ai-bubble">
@@ -301,7 +282,7 @@ export const AiLabPage: React.FC = () => {
                       <div className="ai-action-advice-box">
                         <div className="advice-head">
                           <TrendingUp size={15} className="advice-icon" />
-                          <span>Saran & Langkah Tindakan untuk Toko:</span>
+                          <span>Rekomendasi Operasional:</span>
                         </div>
                         <p className="advice-text">{selectedPrompt.response.actionAdvice}</p>
                       </div>
@@ -317,10 +298,10 @@ export const AiLabPage: React.FC = () => {
       <section className="superpowers-section">
         <div className="container">
           <div className="section-head-center">
-            <Badge variant="lime" size="sm">Manfaat Nyata Toko</Badge>
-            <h2 className="section-main-title">4 Kemampuan Utama AI untuk Mengembangkan Usaha Anda</h2>
+            <Badge variant="cyan" size="sm">Fungsi Analitik</Badge>
+            <h2 className="section-main-title">Use Case Utama Local AI Assistant</h2>
             <p className="section-main-subtitle">
-              Tidak perlu repot mencatat manual atau menghitung rumus matematika, asisten pintar membantu operasional toko sehari-hari.
+              Membantu pemilik bisnis mengekstrak wawasan dari database operasional tanpa kerumitan rumus spreadsheet.
             </p>
           </div>
 
@@ -329,13 +310,13 @@ export const AiLabPage: React.FC = () => {
               <div className="power-icon-box blue">
                 <DollarSign size={24} />
               </div>
-              <h3 className="power-title">Hitung Laba Bersih Otomatis</h3>
+              <h3 className="power-title">Estimasi Laba & Margin</h3>
               <p className="power-desc">
-                Ketahui keuntungan bersih toko secara otomatis setiap hari setelah dikurangi harga modal produk, diskon, dan biaya operasional.
+                Menghitung laba kotor harian secara otomatis berdasarkan HPP modal barang yang terdata pada katalog produk.
               </p>
               <ul className="power-checks">
-                <li><CheckCircle2 size={14} className="text-emerald" /> Laporan laba per produk dan per kategori</li>
-                <li><CheckCircle2 size={14} className="text-emerald" /> Pantau margin keuntungan tetap sehat</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Laporan margin laba per item</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Pemantauan profitabilitas kategori</li>
               </ul>
             </div>
 
@@ -343,13 +324,13 @@ export const AiLabPage: React.FC = () => {
               <div className="power-icon-box orange">
                 <AlertTriangle size={24} />
               </div>
-              <h3 className="power-title">Peringatan Stok Menipis</h3>
+              <h3 className="power-title">Audit Stok Kritis</h3>
               <p className="power-desc">
-                Cegah kehilangan pembeli akibat kehabisan stok. AI memprediksi sisa stok akan habis dalam berapa hari dan memberi peringatan dini.
+                Memindai seluruh tabel stok untuk mengidentifikasi produk yang kuantitasnya mendekati batas minimum pemesanan.
               </p>
               <ul className="power-checks">
-                <li><CheckCircle2 size={14} className="text-emerald" /> Pengingat otomatis sebelum barang kosong</li>
-                <li><CheckCircle2 size={14} className="text-emerald" /> Buat daftar belanja restock dengan 1 klik</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Peringatan dini sebelum stok habis</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Rekomendasi restock barang prioritas</li>
               </ul>
             </div>
 
@@ -357,13 +338,13 @@ export const AiLabPage: React.FC = () => {
               <div className="power-icon-box purple">
                 <Clock size={24} />
               </div>
-              <h3 className="power-title">Deteksi Jam Ramai Pelanggan</h3>
+              <h3 className="power-title">Analisis Pola Waktu</h3>
               <p className="power-desc">
-                Ketahui pola jam sibuk toko di siang dan malam hari agar Anda bisa mengatur jadwal jaga staf kasir tanpa membuat antrean membludak.
+                Membaca timestamp nota transaksi untuk mengidentifikasi pola kepadatan belanja pada periode tertentu.
               </p>
               <ul className="power-checks">
-                <li><CheckCircle2 size={14} className="text-emerald" /> Rekomendasi penambahan kasir di jam sibuk</li>
-                <li><CheckCircle2 size={14} className="text-emerald" /> Pangkas waktu antre kasir hingga 50%</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Pemetaan jam puncak operasional</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Evaluasi kesiapan kasir & hardware</li>
               </ul>
             </div>
 
@@ -371,71 +352,15 @@ export const AiLabPage: React.FC = () => {
               <div className="power-icon-box green">
                 <ShieldCheck size={24} />
               </div>
-              <h3 className="power-title">Cegah Selisih Uang Kasir</h3>
+              <h3 className="power-title">Rekonsiliasi Shift Kasir</h3>
               <p className="power-desc">
-                AI mencocokkan seluruh struk nota dengan uang fisik di laci kasir setiap tutup shift, mendeteksi selisih atau transaksi janggal secara transparan.
+                Membantu mencocokkan total nota kasir dengan saldo uang tunai fisik di laci kas saat proses tutup shift.
               </p>
               <ul className="power-checks">
-                <li><CheckCircle2 size={14} className="text-emerald" /> Rekonsiliasi kasir otomatis tutup toko</li>
-                <li><CheckCircle2 size={14} className="text-emerald" /> Deteksi pembatalan nota mencurigakan</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Audit selisih kas transparan</li>
+                <li><CheckCircle2 size={14} className="text-emerald" /> Log mutasi tercatat ke database</li>
               </ul>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="comparison-ai-section">
-        <div className="container">
-          <div className="section-head-center">
-            <Badge variant="cyan" size="sm">Kenapa Berbeda?</Badge>
-            <h2 className="section-main-title">Perbandingan AI Asisten Toko ERASTACK vs Chatbot Biasa</h2>
-            <p className="section-main-subtitle">
-              Dibangun khusus untuk kasir & database toko, bukan sekadar chatbot obrolan umum di internet.
-            </p>
-          </div>
-
-          <div className="ai-compare-table-wrap">
-            <table className="ai-compare-table">
-              <thead>
-                <tr>
-                  <th className="col-feat">Fitur & Kemampuan</th>
-                  <th className="col-erastack">
-                    <div className="erastack-header-cell">
-                      <span>AI Asisten ERASTACK POS</span>
-                      <Badge variant="lime" size="sm">Bawaan di Aplikasi</Badge>
-                    </div>
-                  </th>
-                  <th className="col-other">Chatbot Internet Biasa</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="td-feat">Terhubung Langsung ke Data Kasir & Stok Toko</td>
-                  <td className="td-erastack"><CheckCircle2 size={16} className="text-emerald" /> <strong>Ya, membaca data toko secara otomatis</strong></td>
-                  <td className="td-other">✕ Tidak, harus ketik data manual</td>
-                </tr>
-                <tr>
-                  <td className="td-feat">Bisa Dipakai Saat Internet / WiFi Padam</td>
-                  <td className="td-erastack"><CheckCircle2 size={16} className="text-emerald" /> <strong>100% Bisa (Offline di perangkat)</strong></td>
-                  <td className="td-other">✕ Tidak bisa jika internet mati</td>
-                </tr>
-                <tr>
-                  <td className="td-feat">Biaya Langganan / Kuota API</td>
-                  <td className="td-erastack"><CheckCircle2 size={16} className="text-emerald" /> <strong>Gratis Rp 0 Selamanya</strong></td>
-                  <td className="td-other">✕ Bayar sewa bulanan mahal</td>
-                </tr>
-                <tr>
-                  <td className="td-feat">Kerahasiaan Data Usaha & Keuangan Toko</td>
-                  <td className="td-erastack"><CheckCircle2 size={16} className="text-emerald" /> <strong>100% Privat di Komputer/HP Sendiri</strong></td>
-                  <td className="td-other">✕ Data dikirim ke server luar negeri</td>
-                </tr>
-                <tr>
-                  <td className="td-feat">Kecepatan Menjawab Analisis</td>
-                  <td className="td-erastack"><CheckCircle2 size={16} className="text-emerald" /> <strong>Instan &lt; 0.1 Detik</strong></td>
-                  <td className="td-other">✕ Butuh loading 3 - 10 detik</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
@@ -444,24 +369,23 @@ export const AiLabPage: React.FC = () => {
         <div className="container">
           <div className="ailab-cta-card">
             <div className="cta-head-group">
-              <Store size={40} className="cta-store-icon" />
               <h2 className="cta-card-title">
-                AI Asisten Toko Sudah Terpasang Otomatis di ERASTACK POS
+                Coba Modul Kasir & Database EraStack
               </h2>
               <p className="cta-card-desc">
-                Anda tidak perlu menginstal plugin tambahan atau membayar langganan. Cukup unduh aplikasi kasir ERASTACK POS untuk komputer atau smartphone Android Anda.
+                Eksplorasi terminal kasir interaktif untuk mencoba alur input transaksi dan pemotongan stok secara langsung.
               </p>
             </div>
 
             <div className="cta-btn-row">
-              <Link href="/downloads">
-                <Button size="lg" variant="primary" leftIcon={<Download size={18} />}>
-                  Unduh ERASTACK POS Sekarang (Gratis)
+              <Link href="/pos">
+                <Button size="lg" variant="primary" leftIcon={<Play size={18} />}>
+                  Coba Demo Kasir Web
                 </Button>
               </Link>
-              <Link href="/products/pos">
+              <Link href="/docs">
                 <Button size="lg" variant="secondary" rightIcon={<ArrowRight size={16} />}>
-                  Lihat Semua Fitur Kasir
+                  Dokumentasi Teknis
                 </Button>
               </Link>
             </div>

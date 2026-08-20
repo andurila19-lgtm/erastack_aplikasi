@@ -15,35 +15,35 @@ interface HardwareItem {
 const HARDWARE_ITEMS: HardwareItem[] = [
   {
     id: 'printer',
-    name: 'Thermal Printer 58mm & 80mm',
+    name: 'Printer Thermal 58mm & 80mm',
     category: 'Pencetak Struk Kasir',
-    specs: ['Auto-cutter kecepatan 160mm/s', 'Mendukung logo toko & QRIS', 'Tanpa tinta (hemat operasional)'],
-    connection: 'Bluetooth + USB ESC/POS',
-    icon: <Printer size={24} className="hw-icon-blue" />,
+    specs: ['Protokol standar ESC/POS', 'Mendukung format teks monospaced', 'Pencetakan nota tanpa tinta (thermal)'],
+    connection: 'Bluetooth / USB ESC/POS',
+    icon: <Printer size={22} className="hw-icon-blue" />,
   },
   {
     id: 'scanner',
-    name: 'Wireless 1D & 2D Barcode Scanner',
+    name: 'Barcode Scanner 1D & 2D',
     category: 'Pemindai Barcode',
-    specs: ['Membaca barcode layar HP & fisik', 'Jarak transmisi hingga 15 meter', 'Auto-sensing sensor cepat'],
-    connection: 'Wireless 2.4G + USB HID',
-    icon: <Scan size={24} className="hw-icon-lime" />,
+    specs: ['Protokol keyboard emulation (HID)', 'Membaca format EAN-13, UPC, Code128, QR', 'Mode auto-sensing atau trigger'],
+    connection: 'USB HID / Wireless 2.4G',
+    icon: <Scan size={22} className="hw-icon-lime" />,
   },
   {
     id: 'drawer',
-    name: 'Heavy Duty Cash Drawer (RJ11)',
+    name: 'Cash Drawer (Laci Kasir)',
     category: 'Laci Uang Kasir',
-    specs: ['Baja tahan banting 4 bill / 8 coin', 'Kunci manual 3-posisi', 'Terbuka otomatis saat cetak struk'],
-    connection: 'Kabel RJ11 ke Printer',
-    icon: <Archive size={24} className="hw-icon-cyan" />,
+    specs: ['Koneksi pin solenoid RJ11 standar', 'Terpicu otomatis saat perintah cetak struk', 'Kompartemen uang kertas & koin'],
+    connection: 'Kabel RJ11 ke Printer Thermal',
+    icon: <Archive size={22} className="hw-icon-cyan" />,
   },
   {
-    id: 'bundle',
-    name: 'Paket Hardware POS Komplit',
-    category: 'Paket Usaha Siap Jualan',
-    specs: ['Termasuk Printer + Scanner + Drawer', 'Kertas thermal roll 10x', 'Siap pakai langsung tanpa setting rumit'],
-    connection: 'All-in-One Plug & Play',
-    icon: <Layers size={24} className="hw-icon-lime" />,
+    id: 'terminal',
+    name: 'Terminal Perangkat Kasir',
+    category: 'Perangkat Utama',
+    specs: ['Kompatibel dengan OS Windows 10/11 & Android', 'Konsumsi RAM efisien', 'Dukungan layar sentuh & keyboard-mouse'],
+    connection: 'Windows Desktop / Android Mobile',
+    icon: <Layers size={22} className="hw-icon-lime" />,
   },
 ];
 
@@ -52,12 +52,12 @@ export const HardwareSection: React.FC = () => {
     <section className="hardware-section" id="hardware">
       <div className="container hardware-container">
         <div className="section-head-center">
-          <Badge variant="lime" size="sm" dot>Ekosistem Hardware Mesin Kasir</Badge>
+          <Badge variant="cyan" size="sm">Integrasi Hardware</Badge>
           <h2 className="section-main-title">
-            Perangkat Hardware Kasir Terbaik untuk Kelancaran Transaksi
+            Dukungan Protokol Hardware Standar Industri
           </h2>
           <p className="section-main-subtitle">
-            Seluruh hardware teruji 100% kompatibel dengan ERASTACK POS (Windows & Android) secara instan tanpa perlu instalasi driver yang rumit.
+            EraStack dirancang untuk berkomunikasi dengan periferal kasir standar menggunakan protokol universal tanpa ketergantungan pada vendor perangkat keras tunggal.
           </p>
         </div>
 

@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   Download, Monitor, Smartphone, Tag, 
   CheckCircle2, ShieldCheck, HelpCircle, 
-  ChevronDown, MessageSquare, HardDrive
+  ChevronDown, BookOpen, HardDrive, Database
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { DOWNLOAD_RELEASES } from '../data/downloadsData';
@@ -18,35 +19,35 @@ export const DownloadsPage: React.FC = () => {
   return (
     <div className="downloads-page-root">
       <SEOHead
-        title="Pusat Unduhan Aplikasi Kasir ERASTACK POS"
-        description="Unduh aplikasi kasir pintar ERASTACK POS untuk komputer Windows dan HP Android. Gratis, mudah dipasang, dan langsung siap dipakai jualan tanpa internet."
+        title="Pusat Unduhan Resmi • ERASTACK POS"
+        description="Unduh paket biner installer resmi ERASTACK POS untuk Windows Desktop (.exe) dan Android (.apk). Database SQLite lokal mandiri tanpa ketergantungan internet."
       />
 
       <section className="downloads-hero-section">
         <div className="container">
           <div className="downloads-hero-content">
-            <Badge variant="lime" size="sm" dot>Pusat Unduhan Resmi • Siap Pakai</Badge>
+            <Badge variant="cyan" size="sm" dot>Pusat Unduhan Resmi</Badge>
             
             <h1 className="downloads-hero-title">
-              Unduh Aplikasi Kasir <span className="highlight-text">ERASTACK POS</span> untuk Usaha Anda
+              Unduh Paket Biner Resmi <span className="highlight-text">ERASTACK POS</span>
             </h1>
 
             <p className="downloads-hero-desc">
-              Pilih aplikasi kasir sesuai perangkat yang Anda miliki di toko. Pemasangan sangat mudah dalam 1 menit, langsung siap melayani transaksi pelanggan tanpa perlu koneksi internet.
+              Pilih paket biner sesuai sistem operasi perangkat kasir Anda. Seluruh file biner resmi telah diverifikasi dengan checksum integritas data.
             </p>
 
             <div className="downloads-benefit-pills">
               <div className="benefit-pill">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>100% Bebas Biaya Langganan</span>
-              </div>
-              <div className="benefit-pill">
                 <HardDrive size={16} className="text-brand" />
-                <span>Bisa Dipakai Tanpa Internet</span>
+                <span>Operasi Mandiri Offline</span>
               </div>
               <div className="benefit-pill">
-                <ShieldCheck size={16} className="text-emerald" />
-                <span>Aplikasi Resmi & 100% Aman</span>
+                <Database size={16} className="text-emerald" />
+                <span>Penyimpanan SQLite Lokal</span>
+              </div>
+              <div className="benefit-pill">
+                <ShieldCheck size={16} className="text-purple" />
+                <span>Biner Terverifikasi Kriptografis</span>
               </div>
             </div>
           </div>
@@ -56,9 +57,9 @@ export const DownloadsPage: React.FC = () => {
       <section className="downloads-cards-section">
         <div className="container">
           <div className="section-head-center">
-            <h2 className="section-main-title">Pilih Perangkat Kasir Anda</h2>
+            <h2 className="section-main-title">Pilih Paket Sistem Operasi</h2>
             <p className="section-main-subtitle">
-              Klik tombol unduh di bawah ini sesuai komputer atau smartphone yang Anda gunakan di toko.
+              Tersedia untuk sistem operasi Windows desktop dan perangkat mobile Android.
             </p>
           </div>
 
@@ -75,7 +76,7 @@ export const DownloadsPage: React.FC = () => {
                   <div className="dl-title-wrap">
                     <div className="dl-badge-row">
                       {release.badge && (
-                        <Badge variant="lime" size="sm" dot>
+                        <Badge variant="cyan" size="sm" dot>
                           {release.badge}
                         </Badge>
                       )}
@@ -86,12 +87,12 @@ export const DownloadsPage: React.FC = () => {
                 </div>
 
                 <div className="dl-target-device">
-                  <span className="target-label">Cocok untuk:</span>
+                  <span className="target-label">Target Perangkat:</span>
                   <p className="target-value">{release.recommendedFor}</p>
                 </div>
 
                 <div className="dl-features-box">
-                  <span className="features-head">Keunggulan Aplikasi:</span>
+                  <span className="features-head">Karakteristik Modul:</span>
                   <ul className="dl-feature-list">
                     {release.features.map((feat, idx) => (
                       <li key={idx} className="dl-feature-item">
@@ -104,19 +105,19 @@ export const DownloadsPage: React.FC = () => {
 
                 <div className="dl-meta-info-row">
                   <div className="meta-item">
-                    <span className="meta-label">Ukuran File:</span>
-                    <strong className="meta-val">{release.fileSize} (Hemat Kuota)</strong>
+                    <span className="meta-label">Ukuran Biner:</span>
+                    <strong className="meta-val">{release.fileSize}</strong>
                   </div>
                   <div className="meta-item">
-                    <span className="meta-label">Waktu Pasang:</span>
-                    <strong className="meta-val">&lt; 1 Menit</strong>
+                    <span className="meta-label">Target OS:</span>
+                    <strong className="meta-val">{release.platform === 'windows' ? 'Windows 10/11' : 'Android 8.0+'}</strong>
                   </div>
                 </div>
 
                 <div className="dl-action-area">
                   <a href={release.downloadUrl} download={release.fileName} className="dl-btn-link">
                     <Button variant="primary" size="lg" leftIcon={<Download size={18} />}>
-                      Unduh Sekarang ({release.fileSize})
+                      Unduh Paket ({release.fileSize})
                     </Button>
                   </a>
                 </div>
@@ -129,10 +130,10 @@ export const DownloadsPage: React.FC = () => {
       <section className="installation-guide-section">
         <div className="container">
           <div className="section-head-center">
-            <Badge variant="cyan" size="sm">Panduan Pemasangan</Badge>
-            <h2 className="section-main-title">Cara Mudah Memasang Aplikasi Kasir</h2>
+            <Badge variant="cyan" size="sm">Panduan Instalasi</Badge>
+            <h2 className="section-main-title">Petunjuk Pemasangan Paket</h2>
             <p className="section-main-subtitle">
-              Ikuti petunjuk sederhana berikut untuk mulai mencatat transaksi penjualan di toko Anda.
+              Langkah-langkah instalasi aplikasi kasir pada perangkat kasir Anda.
             </p>
           </div>
 
@@ -145,7 +146,7 @@ export const DownloadsPage: React.FC = () => {
               >
                 <div className="guide-title-left">
                   <Monitor size={20} className="text-brand" />
-                  <span className="guide-q">Cara Pasang di Komputer / Laptop Kasir (Windows)</span>
+                  <span className="guide-q">Instalasi pada Windows Desktop (.exe)</span>
                 </div>
                 <ChevronDown size={18} className={`guide-chevron ${openGuide === 0 ? 'rotate' : ''}`} />
               </button>
@@ -153,11 +154,11 @@ export const DownloadsPage: React.FC = () => {
               {openGuide === 0 && (
                 <div className="guide-body">
                   <ol className="guide-steps-list">
-                    <li>Klik tombol <strong>Unduh untuk Komputer Kasir (Windows)</strong> di atas.</li>
-                    <li>Buka file installer yang sudah selesai diunduh.</li>
-                    <li>Ikuti petunjuk di layar (cukup klik <strong>Lanjut / Next</strong> sampai selesai).</li>
-                    <li>Ikon kasir ERASTACK POS akan otomatis muncul di layar desktop komputer Anda.</li>
-                    <li>Buka aplikasi, masukkan nama toko Anda, dan kasir langsung siap dipakai jualan!</li>
+                    <li>Unduh file installer Windows (.exe) pada kartu unduhan di atas.</li>
+                    <li>Jalankan file installer yang telah selesai diunduh.</li>
+                    <li>Ikuti panduan wizard instalasi hingga selesai.</li>
+                    <li>Shortcut aplikasi EraStack POS akan terpasang di desktop komputer Anda.</li>
+                    <li>Buka aplikasi untuk menginisialisasi database SQLite lokal pertama kali.</li>
                   </ol>
                 </div>
               )}
@@ -171,7 +172,7 @@ export const DownloadsPage: React.FC = () => {
               >
                 <div className="guide-title-left">
                   <Smartphone size={20} className="text-emerald" />
-                  <span className="guide-q">Cara Pasang di HP & Tablet Kasir (Android)</span>
+                  <span className="guide-q">Instalasi pada Android Mobile (.apk)</span>
                 </div>
                 <ChevronDown size={18} className={`guide-chevron ${openGuide === 1 ? 'rotate' : ''}`} />
               </button>
@@ -179,11 +180,10 @@ export const DownloadsPage: React.FC = () => {
               {openGuide === 1 && (
                 <div className="guide-body">
                   <ol className="guide-steps-list">
-                    <li>Klik tombol <strong>Unduh untuk HP & Tablet (Android)</strong> langsung dari HP Anda.</li>
-                    <li>Setelah unduhan selesai, klik notifikasi file unduhan untuk mulai memasang.</li>
-                    <li>Jika HP Anda meminta izin pasang aplikasi, centang opsi <strong>Izinkan dari sumber ini</strong>.</li>
-                    <li>Tekan tombol <strong>Pasang / Install</strong> dan tunggu beberapa detik.</li>
-                    <li>Aplikasi kasir siap digunakan di mana saja.</li>
+                    <li>Unduh paket APK langsung dari peramban web pada perangkat Android Anda.</li>
+                    <li>Buka berkas unduhan dan izinkan instalasi dari sumber browser jika diminta sistem keamanan Android.</li>
+                    <li>Pilih opsi Pasang / Install dan tunggu proses instalasi selesai.</li>
+                    <li>Aplikasi siap digunakan untuk transaksi kasir lokal.</li>
                   </ol>
                 </div>
               )}
@@ -197,7 +197,7 @@ export const DownloadsPage: React.FC = () => {
               >
                 <div className="guide-title-left">
                   <HelpCircle size={20} className="text-purple" />
-                  <span className="guide-q">Cara Menghubungkan Printer Struk Kasir & Scanner Barcode</span>
+                  <span className="guide-q">Koneksi Printer Thermal ESC/POS & Barcode Scanner</span>
                 </div>
                 <ChevronDown size={18} className={`guide-chevron ${openGuide === 2 ? 'rotate' : ''}`} />
               </button>
@@ -205,10 +205,10 @@ export const DownloadsPage: React.FC = () => {
               {openGuide === 2 && (
                 <div className="guide-body">
                   <ol className="guide-steps-list">
-                    <li>Colokkan kabel USB printer struk thermal ke komputer atau nyalakan Bluetooth printer di HP Anda.</li>
-                    <li>Buka menu <strong>Pengaturan Printer</strong> di dalam aplikasi kasir ERASTACK POS.</li>
-                    <li>Pilih merk printer Anda, lalu klik tombol <strong>Uji Cetak Struk</strong>.</li>
-                    <li>Colokkan barcode scanner ke komputer, scanner langsung otomatis bisa membaca barcode produk tanpa setting tambahan.</li>
+                    <li>Hubungkan printer thermal USB ke port komputer atau sambungkan via Bluetooth pada perangkat Android.</li>
+                    <li>Buka menu Pengaturan Hardware di dalam aplikasi kasir EraStack.</li>
+                    <li>Pilih tipe port dan lakukan Uji Cetak (Test Print).</li>
+                    <li>Hubungkan barcode scanner USB, perangkat akan langsung dikenali sebagai keyboard input standar (HID).</li>
                   </ol>
                 </div>
               )}
@@ -221,22 +221,22 @@ export const DownloadsPage: React.FC = () => {
         <div className="container">
           <div className="store-help-card">
             <div className="help-icon-wrap">
-              <MessageSquare size={32} className="help-icon" />
+              <BookOpen size={32} className="help-icon" />
             </div>
 
             <div className="help-content">
-              <h3 className="help-title">Butuh Bantuan Memasang di Toko Anda?</h3>
+              <h3 className="help-title">Dokumentasi & Panduan Lengkap</h3>
               <p className="help-desc">
-                Tim teknis kami siap memandu pemasangan aplikasi kasir, printer thermal, dan scanner barcode toko Anda secara gratis sampai lancar digunakan.
+                Pelajari dokumentasi teknis arsitektur, konfigurasi hardware ESC/POS, skema database SQLite, dan panduan penggunaan kasir.
               </p>
             </div>
 
             <div className="help-actions">
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="btn-wrap-full">
+              <Link href="/docs" className="btn-wrap-full">
                 <Button variant="accent" size="lg">
-                  Konsultasi Gratis via WhatsApp
+                  Buka Dokumentasi Teknis
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

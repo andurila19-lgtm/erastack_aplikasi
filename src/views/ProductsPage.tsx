@@ -32,7 +32,7 @@ export const ProductsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Semua Kategori');
   const [selectedPlatform, setSelectedPlatform] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'popular' | 'rating' | 'name'>('popular');
+  const [sortBy, setSortBy] = useState<'featured' | 'name' | 'category'>('featured');
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS_CATALOG.filter(product => {
@@ -50,11 +50,11 @@ export const ProductsPage: React.FC = () => {
 
       return matchesSearch && matchesCategory && matchesPlatform;
     }).sort((a, b) => {
-      if (sortBy === 'rating') {
-        return b.rating - a.rating;
-      }
       if (sortBy === 'name') {
         return a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'category') {
+        return a.category.localeCompare(b.category);
       }
       return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     });
@@ -64,49 +64,49 @@ export const ProductsPage: React.FC = () => {
     setSearchQuery('');
     setSelectedCategory('Semua Kategori');
     setSelectedPlatform('all');
-    setSortBy('popular');
+    setSortBy('featured');
   };
 
   return (
     <div className="products-page-root">
       <SEOHead
-        title="Katalog Produk & Software Resmi"
+        title="Katalog Produk & Software Resmi • ERASTACK"
         description="Jelajahi ekosistem perangkat lunak ERASTACK: POS offline-first, engine AI lokal on-device, dan utilitas hardware bisnis."
       />
 
       <section className="products-hero-section">
         <div className="container">
           <div className="products-hero-content">
-            <Badge variant="lime" size="sm" dot>Katalog Software Resmi ERASTACK</Badge>
+            <Badge variant="cyan" size="sm" dot>Katalog Software ERASTACK</Badge>
             
             <h1 className="products-hero-title">
-              Software Bisnis, AI Lokal & Utilitas <span className="highlight-text">Siap Produksi</span>
+              Modul Perangkat Lunak <span className="highlight-text">Offline-First</span>
             </h1>
             
             <p className="products-hero-desc">
-              Temukan seluruh aplikasi resmi ekosistem ERASTACK. Dirancang khusus untuk beroperasi offline, aman dari ketergantungan cloud, dan sangat hemat sumber daya.
+              Koleksi aplikasi resmi ekosistem ERASTACK yang dirancang untuk beroperasi secara mandiri di perangkat lokal dengan penyimpanan database SQLite.
             </p>
 
             <div className="products-stats-row">
               <div className="stat-pill-card">
                 <span className="stat-pill-icon"><Zap size={16} /></span>
                 <div className="stat-pill-text">
-                  <span className="stat-pill-num">6 Aplikasi</span>
-                  <span className="stat-pill-label">Tersedia Siap Pakai</span>
+                  <span className="stat-pill-num">6 Modul</span>
+                  <span className="stat-pill-label">Software Resmi</span>
                 </div>
               </div>
               <div className="stat-pill-card">
                 <span className="stat-pill-icon"><HardDrive size={16} /></span>
                 <div className="stat-pill-text">
-                  <span className="stat-pill-num">100% Offline</span>
-                  <span className="stat-pill-label">Database SQLite Lokal</span>
+                  <span className="stat-pill-num">Offline-First</span>
+                  <span className="stat-pill-label">SQLite Local Storage</span>
                 </div>
               </div>
               <div className="stat-pill-card">
                 <span className="stat-pill-icon"><Cpu size={16} /></span>
                 <div className="stat-pill-text">
-                  <span className="stat-pill-num">Rp 0 Biaya</span>
-                  <span className="stat-pill-label">AI On-Device Tanpa API</span>
+                  <span className="stat-pill-num">Local AI</span>
+                  <span className="stat-pill-label">Sandboxed Dispatcher</span>
                 </div>
               </div>
             </div>
@@ -177,9 +177,9 @@ export const ProductsPage: React.FC = () => {
                     onChange={e => setSortBy(e.target.value as any)}
                     aria-label="Urutkan produk"
                   >
-                    <option value="popular">Paling Populer</option>
-                    <option value="rating">Rating Tertinggi</option>
+                    <option value="featured">Pilihan Utama</option>
                     <option value="name">Nama (A - Z)</option>
+                    <option value="category">Kategori</option>
                   </select>
                 </div>
               </div>

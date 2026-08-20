@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, ArrowUpRight, ShoppingCart } from 'lucide-react';
+import { Search, Menu, X, ArrowUpRight } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 import './Navbar.css';
 
@@ -16,7 +16,7 @@ export interface NavbarProps {
 const NAV_LINKS = [
   { label: 'Produk', path: '/products' },
   { label: 'Asisten AI', path: '/ai-lab' },
-  { label: 'Kisah Sukses', path: '/projects' },
+  { label: 'Solusi Industri', path: '/projects' },
   { label: 'Unduhan', path: '/downloads' },
   { label: 'Panduan', path: '/docs' },
   { label: 'Tentang', path: '/about' },
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </Link>
 
             <Link href="/downloads" className="navbar-cta-btn">
-              <span>Unduh Gratis</span>
+              <span>Unduhan</span>
               <ArrowUpRight size={14} />
             </Link>
 

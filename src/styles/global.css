@@ -7,6 +7,16 @@
   padding: 0;
 }
 
+/* Remove number input spinner arrows globally */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -155,4 +165,39 @@ code, kbd, samp, pre {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Section Headings & Spacing Utilities */
+.section-head-center {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  max-width: 820px;
+}
+
+.section-head-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  max-width: 820px;
+}
+
+.section-main-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.section-main-subtitle {
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }

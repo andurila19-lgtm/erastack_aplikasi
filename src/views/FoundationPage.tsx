@@ -167,29 +167,29 @@ export const FoundationPage: React.FC = () => {
           </div>
 
           <h1 className="workbench-title">
-            Architected for <span className="text-gradient">Sovereignty</span>. Built for Zero-Latency Operations.
+            Offline-First Architecture & <span className="text-gradient">Engineering Console</span>
           </h1>
 
           <p className="workbench-subtitle">
-            Platform rekayasa perangkat lunak mandiri, komputasi AI on-device, dan distribusi aplikasi bisnis tangguh kelas industri yang beroperasi 100% offline tanpa ketergantungan cloud.
+            Simulasi dan inspeksi teknis komponen inti EraStack: pipeline transaksi kasir, local tool dispatcher, persistensi SQLite WAL, dan kedaulatan data di perangkat lokal.
           </p>
 
           <div className="hero-stats-strip">
             <div className="stat-node">
               <span className="node-label">OPERATIONAL INVARIANT</span>
-              <span className="node-val">100% Offline-First</span>
+              <span className="node-val">Offline-First</span>
             </div>
             <div className="stat-node">
-              <span className="node-label">LOCAL AI INFERENCE</span>
-              <span className="node-val tabular-nums">&lt; 18ms Latency</span>
+              <span className="node-label">LOCAL PROCESSING</span>
+              <span className="node-val">On-Device Dispatch</span>
             </div>
             <div className="stat-node">
-              <span className="node-label">DESKTOP RAM BUDGET</span>
-              <span className="node-val tabular-nums">&lt; 70MB Idle</span>
-            </div>
-            <div className="stat-node">
-              <span className="node-label">DATABASE PERSISTENCE</span>
+              <span className="node-label">STORAGE ENGINE</span>
               <span className="node-val">SQLite WAL Mode</span>
+            </div>
+            <div className="stat-node">
+              <span className="node-label">DEVELOPMENT STATUS</span>
+              <span className="node-val">Active Development</span>
             </div>
           </div>
         </section>

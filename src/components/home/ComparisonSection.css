@@ -1,6 +1,6 @@
 .comparison-section {
   padding: var(--space-10) 0;
-  background-color: #F8FAFC;
+  background-color: var(--bg-surface-hover);
 }
 
 @media (min-width: 768px) {
@@ -22,71 +22,51 @@
 }
 
 .comparison-table-wrap {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
   overflow-x: auto;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
   -webkit-overflow-scrolling: touch;
-}
-
-@media (min-width: 768px) {
-  .comparison-table-wrap {
-    border-radius: var(--radius-xl);
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
-  }
 }
 
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  min-width: 680px;
+  min-width: 700px;
 }
 
 .comparison-table th {
-  padding: var(--space-4) var(--space-4);
-  font-size: 13px;
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
   font-weight: 800;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
-  background-color: #F8FAFC;
-}
-
-@media (min-width: 640px) {
-  .comparison-table th {
-    padding: var(--space-5) var(--space-6);
-    font-size: 14px;
-  }
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
 }
 
 .col-aspect {
-  width: 28%;
+  width: 25%;
   color: var(--text-muted);
 }
 
 .col-erastack {
-  width: 32%;
-  background-color: rgba(0, 102, 255, 0.06) !important;
+  width: 35%;
+  background-color: rgba(0, 102, 255, 0.04) !important;
   border-left: 2px solid var(--brand-primary);
   border-right: 2px solid var(--brand-primary);
 }
 
 .table-header-erastack {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 4px;
 }
 
 .erastack-brand-tag {
-  font-size: 15px;
-  font-weight: 900;
+  font-size: var(--text-body);
+  font-weight: 800;
   color: var(--brand-primary);
-}
-
-@media (min-width: 640px) {
-  .erastack-brand-tag {
-    font-size: 16px;
-  }
 }
 
 .col-other,
@@ -96,57 +76,27 @@
 }
 
 .comparison-table td {
-  padding: var(--space-4) var(--space-4);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  font-size: 13px;
-}
-
-@media (min-width: 640px) {
-  .comparison-table td {
-    padding: var(--space-5) var(--space-6);
-    font-size: 14px;
-  }
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+  line-height: 1.5;
 }
 
 .cell-aspect {
-  font-weight: 700;
   color: var(--text-primary);
 }
 
 .cell-erastack {
-  background-color: rgba(0, 102, 255, 0.03);
+  background-color: rgba(0, 102, 255, 0.02);
   border-left: 2px solid var(--brand-primary);
   border-right: 2px solid var(--brand-primary);
-  font-weight: 700;
+}
+
+.cell-text-erastack {
   color: var(--brand-primary);
+  font-weight: 600;
 }
 
-.cell-content-good {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.icon-check {
-  color: var(--status-success);
-  flex-shrink: 0;
-}
-
-.cell-cloud {
+.cell-text-other {
   color: var(--text-secondary);
-}
-
-.cell-content-bad {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.icon-cross {
-  color: var(--status-error);
-  flex-shrink: 0;
-}
-
-.cell-manual {
-  color: var(--text-muted);
 }

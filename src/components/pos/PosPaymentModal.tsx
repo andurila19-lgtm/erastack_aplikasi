@@ -16,30 +16,32 @@ export interface PosPaymentModalProps {
 }
 
 export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClose, onSuccess }) => {
-  const { cart, completeTransaction } = usePos();
+  const { cart, cartDiscount, completeTransaction } = usePos();
   const [paymentMethod, setPaymentMethod] = useState<'TUNAI' | 'QRIS' | 'TRANSFER'>('TUNAI');
   const [paidInput, setPaidInput] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.sellPrice * item.qty), 0);
-  const totalPayable = subtotal;
+  const totalPayable = Math.max(0, subtotal - cartDiscount);
 
   const numPaid = Number(paidInput) || 0;
   const change = Math.max(0, numPaid - totalPayable);
   const isUnderpaid = paymentMethod === 'TUNAI' && numPaid > 0 && numPaid < totalPayable;
-  const isExactOrOver = paymentMethod !== 'TUNAI' || numPaid >= totalPayable;
+  const isExactOrOver = paymentMethod !== 'TUNAI' || numPaid >= totalPayable || (paidInput === '' && totalPayable === 0);
 
   useEffect(() => {
     if (isOpen) {
       setPaidInput('');
       setNotes('');
       setPaymentMethod('TUNAI');
+      setIsProcessing(false);
     }
   }, [isOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
+      if (!isOpen || isProcessing) return;
       if (e.key === 'Escape') {
         onClose();
       }
@@ -49,15 +51,25 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isExactOrOver]);
+  }, [isOpen, isExactOrOver, isProcessing]);
 
   if (!isOpen) return null;
 
   const handleComplete = () => {
-    const finalPaid = paymentMethod === 'TUNAI' ? (numPaid || totalPayable) : totalPayable;
-    const tx = completeTransaction(finalPaid, paymentMethod, 0, notes);
-    if (tx) {
-      onSuccess();
+    if (isProcessing) return; // Prevent duplicate submit
+    if (paymentMethod === 'TUNAI' && numPaid < totalPayable && totalPayable > 0) {
+      return; // Prevent underpaid completion
+    }
+
+    setIsProcessing(true);
+    try {
+      const finalPaid = paymentMethod === 'TUNAI' ? (numPaid || totalPayable) : totalPayable;
+      const tx = completeTransaction(finalPaid, paymentMethod, notes);
+      if (tx) {
+        onSuccess();
+      }
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -68,6 +80,16 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
   const formatRupiah = (val: number) => {
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
   };
+
+  // Generate dynamic round cash suggestions based on totalPayable
+  const quickCashOptions = [
+    totalPayable,
+    Math.ceil(totalPayable / 10000) * 10000,
+    Math.ceil(totalPayable / 50000) * 50000,
+    Math.ceil(totalPayable / 100000) * 100000,
+    100000,
+    200000,
+  ].filter((v, idx, arr) => v >= totalPayable && arr.indexOf(v) === idx && v > 0);
 
   return (
     <div className="pos-modal-overlay">
@@ -84,8 +106,8 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
 
         <div className="payment-modal-body">
           <div className="payment-total-banner">
-            <span className="total-label">Total yang Harus Dibayar:</span>
-            <strong className="total-figure">{formatRupiah(totalPayable)}</strong>
+            <span className="total-label">Total Tagihan:</span>
+            <strong className="total-figure tabular-nums">{formatRupiah(totalPayable)}</strong>
           </div>
 
           <div className="method-selector-wrap">
@@ -145,49 +167,36 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
                 >
                   Uang Pas ({formatRupiah(totalPayable)})
                 </button>
-                <button
-                  type="button"
-                  className="quick-cash-btn"
-                  onClick={() => handleQuickCash(20000)}
-                >
-                  Rp 20.000
-                </button>
-                <button
-                  type="button"
-                  className="quick-cash-btn"
-                  onClick={() => handleQuickCash(50000)}
-                >
-                  Rp 50.000
-                </button>
-                <button
-                  type="button"
-                  className="quick-cash-btn"
-                  onClick={() => handleQuickCash(100000)}
-                >
-                  Rp 100.000
-                </button>
-                <button
-                  type="button"
-                  className="quick-cash-btn"
-                  onClick={() => handleQuickCash(200000)}
-                >
-                  Rp 200.000
-                </button>
+                {quickCashOptions.map((amt) => {
+                  if (amt === totalPayable) return null;
+                  return (
+                    <button
+                      key={amt}
+                      type="button"
+                      className="quick-cash-btn"
+                      onClick={() => handleQuickCash(amt)}
+                    >
+                      {formatRupiah(amt)}
+                    </button>
+                  );
+                })}
               </div>
 
-              <div className={`change-display-box ${isUnderpaid ? 'underpaid' : 'change-ok'}`}>
-                {isUnderpaid ? (
-                  <>
-                    <AlertCircle size={18} className="text-red" />
-                    <span>Uang Kurang: <strong>{formatRupiah(totalPayable - numPaid)}</strong></span>
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 size={18} className="text-emerald" />
-                    <span>Kembalian: <strong>{formatRupiah(change)}</strong></span>
-                  </>
-                )}
-              </div>
+              {numPaid > 0 && (
+                <div className={`change-display-box ${isUnderpaid ? 'underpaid' : 'change-ok'}`}>
+                  {isUnderpaid ? (
+                    <>
+                      <AlertCircle size={18} />
+                      <span>Uang Kurang: <strong>{formatRupiah(totalPayable - numPaid)}</strong></span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 size={18} />
+                      <span>Uang Kembalian: <strong className="tabular-nums">{formatRupiah(change)}</strong></span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
@@ -219,7 +228,7 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
             <input
               type="text"
               className="notes-input"
-              placeholder="Contoh: Meja 4 / Bungkus plastik / Langganan"
+              placeholder="Contoh: Meja 4 / Bungkus kardus / Pelanggan tetap"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
             />
@@ -227,18 +236,18 @@ export const PosPaymentModal: React.FC<PosPaymentModalProps> = ({ isOpen, onClos
         </div>
 
         <div className="payment-modal-foot">
-          <button type="button" className="btn-cancel-modal" onClick={onClose}>
+          <button type="button" className="btn-cancel-modal" onClick={onClose} disabled={isProcessing}>
             Batal (Esc)
           </button>
 
           <button
             type="button"
             className="btn-submit-payment"
-            disabled={!isExactOrOver}
+            disabled={!isExactOrOver || isProcessing}
             onClick={handleComplete}
           >
             <Printer size={18} />
-            <span>Selesaikan & Cetak Struk</span>
+            <span>{isProcessing ? 'Memproses...' : 'Selesaikan & Cetak Struk'}</span>
             <ArrowRight size={16} />
           </button>
         </div>

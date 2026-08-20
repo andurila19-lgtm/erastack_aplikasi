@@ -3,13 +3,12 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
-  Store, MapPin, CheckCircle2, TrendingUp, 
-  Quote, Download, MessageSquare, ArrowRight, 
-  Coffee, ShoppingCart, Utensils, Scissors, 
-  Shirt, Wrench, ShieldCheck, Users
+  Store, CheckCircle2, ArrowRight, Play,
+  Coffee, ShoppingCart, Scissors, 
+  Shirt, Wrench, HardDrive, Database, Cpu
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
-import { CASE_STUDIES, type CaseStudyItem } from '../data/projectsData';
+import { USE_CASES, type UseCaseItem } from '../data/projectsData';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import './ProjectsPage.css';
@@ -18,7 +17,6 @@ const CATEGORIES = [
   'Semua Industri',
   'Kafe & Kuliner',
   'Minimarket & Retail',
-  'Restoran & Meja',
   'Jasa & Barbershop',
   'Fashion & Butik',
   'Bengkel & Servis',
@@ -27,11 +25,11 @@ const CATEGORIES = [
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Semua Industri');
 
-  const filteredStudies = useMemo(() => {
+  const filteredUseCases = useMemo(() => {
     if (selectedCategory === 'Semua Industri') {
-      return CASE_STUDIES;
+      return USE_CASES;
     }
-    return CASE_STUDIES.filter(item => item.category === selectedCategory);
+    return USE_CASES.filter(item => item.category === selectedCategory);
   }, [selectedCategory]);
 
   const renderCategoryIcon = (category: string) => {
@@ -40,8 +38,6 @@ export const ProjectsPage: React.FC = () => {
         return <Coffee size={14} className="cat-icon" />;
       case 'Minimarket & Retail':
         return <ShoppingCart size={14} className="cat-icon" />;
-      case 'Restoran & Meja':
-        return <Utensils size={14} className="cat-icon" />;
       case 'Jasa & Barbershop':
         return <Scissors size={14} className="cat-icon" />;
       case 'Fashion & Butik':
@@ -56,45 +52,45 @@ export const ProjectsPage: React.FC = () => {
   return (
     <div className="projects-page-root">
       <SEOHead
-        title="Studi Kasus & Kisah Sukses Toko Nyata • ERASTACK POS"
-        description="Pelajari kisah sukses pengusaha kafe, minimarket, restoran, butik, dan bengkel di seluruh Indonesia yang meningkatkan omset dan kelancaran kasir bersama ERASTACK POS."
+        title="Solusi Industri & Skenario Penggunaan • ERASTACK POS"
+        description="Pelajari bagaimana arsitektur offline-first ERASTACK POS dirancang untuk menyelesaikan kebutuhan operasional kafe, minimarket, distro, bengkel, dan industri jasa."
       />
 
       <section className="projects-hero-section">
         <div className="container">
           <div className="projects-hero-content">
-            <Badge variant="lime" size="sm" dot>Kisah Sukses Pengusaha Nyata</Badge>
+            <Badge variant="cyan" size="sm" dot>Solusi & Skenario Industri</Badge>
             
             <h1 className="projects-hero-title">
-              Kisah Nyata Bisnis & UMKM yang <span className="highlight-text">Sukses Berkembang</span>
+              Dirancang untuk Karakteristik <span className="highlight-text">Operasional Nyata</span>
             </h1>
 
             <p className="projects-hero-desc">
-              Lihat bagaimana berbagai usaha nyata di seluruh penjuru nusantara menghilangkan antrean kasir, merapikan pembukuan stok, dan menghemat biaya operasional bersama ERASTACK POS.
+              Setiap industri bisnis memiliki alur transaksi dan kebutuhan kasir yang unik. Pelajari bagaimana sistem EraStack memetakan fitur ke setiap skenario bisnis.
             </p>
 
             <div className="projects-stats-bar">
               <div className="stat-pill">
-                <Users size={16} className="text-brand" />
+                <HardDrive size={16} className="text-brand" />
                 <div className="stat-text">
-                  <strong>1.200+ Toko Aktif</strong>
-                  <span>Tersebar di 34 Provinsi</span>
+                  <strong>100% Offline Engine</strong>
+                  <span>Operasi kasir mandiri tanpa internet</span>
                 </div>
               </div>
 
               <div className="stat-pill">
-                <ShieldCheck size={16} className="text-emerald" />
+                <Database size={16} className="text-emerald" />
                 <div className="stat-text">
-                  <strong>0 Transaksi Hilang</strong>
-                  <span>100% Aman Tanpa Internet</span>
+                  <strong>SQLite Local Persistence</strong>
+                  <span>Kedaulatan data di perangkat sendiri</span>
                 </div>
               </div>
 
               <div className="stat-pill">
-                <TrendingUp size={16} className="text-purple" />
+                <Cpu size={16} className="text-purple" />
                 <div className="stat-text">
-                  <strong>+35% Rata-rata Omset</strong>
-                  <span>Pelayanan Kasir Cepat</span>
+                  <strong>Hardware Standards</strong>
+                  <span>Integrasi printer thermal & barcode</span>
                 </div>
               </div>
             </div>
@@ -121,56 +117,50 @@ export const ProjectsPage: React.FC = () => {
           </div>
 
           <div className="studies-grid">
-            {filteredStudies.map(study => (
-              <article key={study.id} className="study-card">
+            {filteredUseCases.map(useCase => (
+              <article key={useCase.id} className="study-card">
                 <div className="study-card-header">
                   <div className="study-tag-row">
                     <span className="industry-chip">
-                      {renderCategoryIcon(study.category)}
-                      <span>{study.category}</span>
-                    </span>
-                    <span className="location-chip">
-                      <MapPin size={12} />
-                      <span>{study.location}</span>
+                      {renderCategoryIcon(useCase.category)}
+                      <span>{useCase.category}</span>
                     </span>
                   </div>
 
                   <div className="growth-metric-badge">
-                    <TrendingUp size={14} className="growth-icon" />
-                    <span>{study.highlightMetric}</span>
+                    <span>{useCase.badgeText}</span>
                   </div>
                 </div>
 
                 <div className="study-store-info">
-                  <h3 className="store-name-title">{study.storeName}</h3>
-                  <span className="store-branches-tag">{study.branches}</span>
+                  <h3 className="store-name-title">{useCase.title}</h3>
+                  <p className="target-profile-desc">{useCase.targetProfile}</p>
                 </div>
 
                 <div className="story-comparison-box">
                   <div className="story-part challenge">
-                    <span className="story-part-label text-error">Kendala Sebelumnya:</span>
-                    <p className="story-part-text">{study.challenge}</p>
+                    <span className="story-part-label text-error">Tantangan Operasional:</span>
+                    <ul className="usecase-point-list">
+                      {useCase.operationalChallenges.map((ch, i) => (
+                        <li key={i}>{ch}</li>
+                      ))}
+                    </ul>
                   </div>
 
                   <div className="story-part solution">
-                    <span className="story-part-label text-success">Solusi ERASTACK POS:</span>
-                    <p className="story-part-text">{study.solution}</p>
+                    <span className="story-part-label text-success">Pendekatan Solusi EraStack:</span>
+                    <ul className="usecase-point-list">
+                      {useCase.systemSolutions.map((sol, i) => (
+                        <li key={i}>{sol}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                <div className="results-metrics-row">
-                  {study.results.map((res, idx) => (
-                    <div key={idx} className="result-metric-item">
-                      <strong className="res-val">{res.val}</strong>
-                      <span className="res-lbl">{res.label}</span>
-                    </div>
-                  ))}
-                </div>
-
                 <div className="features-used-box">
-                  <span className="features-box-label">Fitur yang Digunakan:</span>
+                  <span className="features-box-label">Modul Sistem Terkait:</span>
                   <div className="features-pill-list">
-                    {study.featuresUsed.map((feat, idx) => (
+                    {useCase.relevantFeatures.map((feat, idx) => (
                       <span key={idx} className="feat-chip">
                         <CheckCircle2 size={12} className="feat-chip-icon" />
                         <span>{feat}</span>
@@ -179,16 +169,9 @@ export const ProjectsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="owner-quote-card">
-                  <Quote size={18} className="quote-icon" />
-                  <p className="quote-text">"{study.ownerQuote}"</p>
-                  <div className="quote-author-row">
-                    <div className="author-avatar-dot">{study.ownerName.charAt(0)}</div>
-                    <div className="author-name-group">
-                      <strong className="author-name">{study.ownerName}</strong>
-                      <span className="author-role">{study.ownerRole} • {study.storeName}</span>
-                    </div>
-                  </div>
+                <div className="hardware-setup-box">
+                  <span className="hardware-box-label">Rekomendasi Hardware:</span>
+                  <p className="hardware-setup-text">{useCase.hardwareSetup}</p>
                 </div>
               </article>
             ))}
@@ -202,29 +185,24 @@ export const ProjectsPage: React.FC = () => {
             <div className="cta-head-wrap">
               <Store size={44} className="cta-icon-white" />
               <h2 className="cta-title-main">
-                Siap Membuat Kasir Toko Anda Selancar Bisnis di Atas?
+                Uji Coba EraStack POS di Lingkungan Bisnis Anda
               </h2>
               <p className="cta-desc-main">
-                Tinggalkan pencatatan manual dan kekhawatiran internet mati. Unduh aplikasi kasir ERASTACK POS secara gratis hari ini.
+                Coba antarmuka kasir langsung melalui browser web atau unduh aplikasi desktop/mobile resmi.
               </p>
             </div>
 
             <div className="cta-actions-group">
-              <Link href="/downloads" className="btn-wrap-full">
-                <Button size="lg" variant="primary" leftIcon={<Download size={18} />}>
-                  Unduh ERASTACK POS Gratis
+              <Link href="/pos" className="btn-wrap-full">
+                <Button size="lg" variant="primary" leftIcon={<Play size={18} />}>
+                  Coba Demo Kasir Web
                 </Button>
               </Link>
-              <a 
-                href="https://wa.me/6281234567890" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn-wrap-full"
-              >
-                <Button size="lg" variant="secondary" leftIcon={<MessageSquare size={18} />}>
-                  Konsultasi Toko via WhatsApp
+              <Link href="/downloads" className="btn-wrap-full">
+                <Button size="lg" variant="secondary" rightIcon={<ArrowRight size={16} />}>
+                  Lihat Halaman Unduhan
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

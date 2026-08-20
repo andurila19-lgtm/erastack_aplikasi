@@ -14,21 +14,23 @@ export interface PosBottomNavProps {
 }
 
 export const PosBottomNav: React.FC<PosBottomNavProps> = ({ activeView, setActiveView }) => {
-  const { cart } = usePos();
+  const { cart, hasPermission } = usePos();
   const totalCartCount = cart.reduce((sum, item) => sum + item.qty, 0);
 
-  const NAV_ITEMS = [
-    { id: 'dashboard' as const, label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'register' as const, label: 'Kasir', icon: ShoppingCart, badge: totalCartCount },
-    { id: 'inventory' as const, label: 'Stok', icon: Package },
-    { id: 'reports' as const, label: 'Laporan', icon: BarChart3 },
-    { id: 'settings' as const, label: 'Toko', icon: Settings },
+  const ALL_ITEMS = [
+    { id: 'register' as const, label: 'Kasir', icon: ShoppingCart, badge: totalCartCount, perm: 'canAccessPOS' as const },
+    { id: 'dashboard' as const, label: 'Dashboard', icon: LayoutDashboard, perm: 'canAccessDashboard' as const },
+    { id: 'inventory' as const, label: 'Stok', icon: Package, perm: 'canManageInventory' as const },
+    { id: 'reports' as const, label: 'Laporan', icon: BarChart3, perm: 'canAccessReports' as const },
+    { id: 'settings' as const, label: 'Toko', icon: Settings, perm: 'canManageSettings' as const },
   ];
+
+  const allowedItems = ALL_ITEMS.filter((item) => hasPermission(item.perm));
 
   return (
     <nav className="pos-bottom-nav-root" aria-label="Navigasi Menu Kasir Mobile">
       <div className="pos-bottom-nav-bar">
-        {NAV_ITEMS.map((item) => {
+        {allowedItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeView === item.id;
           return (
