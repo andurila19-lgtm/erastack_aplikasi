@@ -27,15 +27,25 @@
 .pos-nav-brand-group {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .pos-nav-brand-group {
+    gap: var(--space-3);
+    flex: initial;
+  }
 }
 
 .pos-back-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   background: var(--bg-surface-hover);
@@ -51,24 +61,43 @@
 .pos-store-meta {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .pos-store-name-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  min-width: 0;
 }
 
 .pos-brand-icon {
   color: var(--brand-primary);
+  flex-shrink: 0;
 }
 
 .pos-store-title {
-  font-size: var(--text-body);
+  font-size: var(--text-sm);
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+@media (min-width: 480px) {
+  .pos-store-title {
+    max-width: 220px;
+    font-size: var(--text-body);
+  }
+}
+
+@media (min-width: 768px) {
+  .pos-store-title {
+    max-width: 320px;
+  }
 }
 
 .pos-offline-pill {
@@ -76,6 +105,7 @@
   font-family: var(--font-mono);
   color: #059669;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 /* Nav Tabs: Hidden on Mobile (<768px), Visible on Tablet and Desktop */
@@ -189,7 +219,7 @@
 .pos-cashier-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   padding: 4px 8px;
   border-radius: var(--radius-full);
   background: var(--bg-surface-hover);
@@ -197,17 +227,38 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .pos-cashier-pill {
+    gap: 6px;
+    padding: 4px 10px;
+  }
+}
+
+.pos-role-icon {
+  flex-shrink: 0;
 }
 
 .role-selector-inline {
   background: transparent;
   border: none;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-primary);
   cursor: pointer;
   outline: none;
-  padding: 2px 4px;
+  padding: 0;
+  max-width: 75px;
+}
+
+@media (min-width: 480px) {
+  .role-selector-inline {
+    font-size: 12px;
+    max-width: none;
+    padding: 2px 4px;
+  }
 }
 
 .role-selector-inline option {

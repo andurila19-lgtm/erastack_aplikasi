@@ -129,14 +129,14 @@ export const PosNavbar: React.FC<PosNavbarProps> = ({ activeView, setActiveView 
           </div>
 
           <div className="pos-cashier-pill" title="Role Aktif Pengguna">
-            <Shield size={14} className="text-brand" />
+            <Shield size={14} className="text-brand pos-role-icon" />
             <select
               className="role-selector-inline"
               value={currentRole}
               onChange={handleRoleChange}
               aria-label="Pilih Role Pengguna"
             >
-              <option value="OWNER">Owner (Pemilik)</option>
+              <option value="OWNER">Owner</option>
               <option value="MANAGER">Manager</option>
               <option value="CASHIER">Kasir</option>
             </select>
