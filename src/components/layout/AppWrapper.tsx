@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 import { MobileNav } from './MobileNav';
 import { Footer } from './Footer';
@@ -8,8 +9,26 @@ import { CommandPalette } from './CommandPalette';
 import { ToastProvider } from '../../context/ToastContext';
 
 export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const pathname = usePathname();
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isNativeApp, setIsNativeApp] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const isCapacitor = Boolean(
+          (window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()
+        );
+        if (isCapacitor) {
+          setIsNativeApp(true);
+        }
+      }
+    } catch {}
+  }, []);
+
+  const isPosRoute = Boolean(pathname && pathname.startsWith('/pos'));
+  const isCleanLayout = isPosRoute || isNativeApp;
 
   const handleOpenCommand = useCallback(() => setIsCommandOpen(true), []);
   const handleCloseCommand = useCallback(() => setIsCommandOpen(false), []);
@@ -26,6 +45,16 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  if (isCleanLayout) {
+    return (
+      <ToastProvider>
+        <div className="pos-standalone-root">
+          {children}
+        </div>
+      </ToastProvider>
+    );
+  }
 
   return (
     <ToastProvider>
