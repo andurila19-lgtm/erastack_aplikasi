@@ -20,7 +20,11 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }
         const isCapacitor = Boolean(
           (window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()
         );
-        if (isCapacitor) {
+        const isTauri = Boolean(
+          (window as unknown as { __TAURI_INTERNALS__?: unknown; __TAURI__?: unknown }).__TAURI_INTERNALS__ ||
+          (window as unknown as { __TAURI_INTERNALS__?: unknown; __TAURI__?: unknown }).__TAURI__
+        );
+        if (isCapacitor || isTauri) {
           setIsNativeApp(true);
         }
       }

@@ -24,6 +24,9 @@ android/captures
 android/local.properties
 .gradle
 
+src-tauri/target
+src-tauri/gen
+
 .agent
 UIUX DAN REPO
 *.tmp
