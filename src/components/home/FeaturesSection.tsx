@@ -53,7 +53,7 @@ const FEATURE_GROUPS: FeatureCategory[] = [
   },
   {
     category: 'OPERATIONS',
-    badge: 'Akses & Sistem',
+    badge: 'Akses & Keamanan',
     icon: <Users size={20} className="feature-group-icon text-brand" />,
     items: [
       { name: 'Role-Based Access Control', desc: 'Pemisahan hak akses staf: Kasir (hanya transaksi), Manager (stok & laporan), Owner (akses penuh).' },
@@ -62,14 +62,23 @@ const FEATURE_GROUPS: FeatureCategory[] = [
     ],
   },
   {
-    category: 'TECHNOLOGY',
-    badge: 'Arsitektur Sistem',
-    icon: <Database size={20} className="feature-group-icon text-emerald" />,
+    category: 'HARDWARE HUB',
+    badge: 'Integrasi Perangkat',
+    icon: <Printer size={20} className="feature-group-icon text-emerald" />,
     items: [
-      { name: 'Offline-First Engine', desc: 'Seluruh logika bisnis dieksekusi secara lokal tanpa bergantung pada koneksi internet eksternal.' },
-      { name: 'Local SQLite Storage', desc: 'Penyimpanan terstruktur dengan mode WAL untuk persistensi data transaksi yang aman dan cepat.' },
-      { name: 'Hardware ESC/POS & Scanner', desc: 'Dukungan driver printer thermal USB/Bluetooth dan barcode scanner USB HID standar.' },
-      { name: 'Local AI Assistant', desc: 'Asisten pemrosesan lokal untuk ringkasan laporan dan audit stok tanpa pengiriman data ke cloud.' },
+      { name: 'ESC/POS Thermal Spooler', desc: 'Kompatibilitas universal printer struk thermal ukuran 58mm dan 80mm via kabel USB atau Bluetooth.' },
+      { name: 'Cash Drawer RJ11 Trigger', desc: 'Sinyal pulsa otomatis pembuka laci kasir saat transaksi tunai selesai dicetak.' },
+      { name: 'Barcode Scanner USB HID', desc: 'Dukungan pemindai barcode 1D/2D tanpa konfigurasi driver tambahan (Plug & Play).' },
+    ],
+  },
+  {
+    category: 'LOCAL AI & DATA',
+    badge: 'Kecerdasan On-Device',
+    icon: <Cpu size={20} className="feature-group-icon text-purple" />,
+    items: [
+      { name: 'Offline-First SQLite WAL', desc: 'Operasi mandiri tanpa internet dengan transaksi ACID dan penyimpanan lokal cepat.' },
+      { name: 'Sandboxed Tool Dispatcher', desc: 'AI lokal on-device menganalisis performa toko secara privat tanpa kirim data ke cloud.' },
+      { name: 'Stock Shortage Warning', desc: 'Deteksi dini barang menipis dan rekomendasi restock otomatis untuk kelancaran toko.' },
     ],
   },
 ];

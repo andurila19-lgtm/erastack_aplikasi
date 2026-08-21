@@ -11,9 +11,10 @@ export interface ProductItem {
   architecture: string;
   description: string;
   features: string[];
+  detailActionText: string;
+  detailUrl: string;
   primaryActionText: string;
   primaryActionUrl: string;
-  detailUrl: string;
   badgeText?: string;
   featured?: boolean;
 }
@@ -37,9 +38,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Kompatibel Printer Kasir Thermal 58/80mm ESC/POS',
       'Manajemen SKU & Audit Mutasi Stok Real-Time',
     ],
-    primaryActionText: 'Pusat Unduhan',
+    detailActionText: 'Coba Kasir Web',
+    detailUrl: '/pos',
+    primaryActionText: 'Unduh Installer',
     primaryActionUrl: '/downloads',
-    detailUrl: '/products/pos',
     badgeText: 'Core POS',
     featured: true,
   },
@@ -61,9 +63,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Peringatan Kuantitas Stok di Bawah Batas Minimum',
       'Kerahasiaan Data Transaksi Terjaga di Perangkat',
     ],
-    primaryActionText: 'Eksplorasi AI Lab',
+    detailActionText: 'Buku Panduan',
+    detailUrl: '/docs',
+    primaryActionText: 'Coba di AI Lab',
     primaryActionUrl: '/ai-lab',
-    detailUrl: '/ai-lab',
     badgeText: 'AI Engine',
     featured: true,
   },
@@ -85,9 +88,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Pencadangan Mandiri Berkas Basis Data .sqlite',
       'Konsumsi Memori RAM Teroptimasi (< 50MB)',
     ],
-    primaryActionText: 'Dokumentasi Teknis',
-    primaryActionUrl: '/docs',
+    detailActionText: 'Buku Panduan',
     detailUrl: '/docs',
+    primaryActionText: 'Unduh POS & Relay',
+    primaryActionUrl: '/downloads',
     badgeText: 'Data Sync',
   },
   {
@@ -108,9 +112,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Dukungan USB HID Keyboard Emulation & Bluetooth',
       'Penanganan Pemutusan Koneksi Kabel (Auto-Reconnect)',
     ],
-    primaryActionText: 'Pusat Unduhan',
+    detailActionText: 'Uji di POS Kasir',
+    detailUrl: '/pos',
+    primaryActionText: 'Unduh Driver & POS',
     primaryActionUrl: '/downloads',
-    detailUrl: '/downloads',
     badgeText: 'Hardware Ready',
   },
   {
@@ -131,9 +136,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Pelacakan Item Produk Paling Banyak Terjual',
       'Ekspor Laporan Transaksi ke CSV & Print Out',
     ],
-    primaryActionText: 'Lihat Fitur',
-    primaryActionUrl: '/products/pos',
-    detailUrl: '/products/pos',
+    detailActionText: 'Buka Laporan POS',
+    detailUrl: '/pos',
+    primaryActionText: 'Unduh Aplikasi',
+    primaryActionUrl: '/downloads',
     badgeText: 'Analytics',
   },
   {
@@ -154,9 +160,10 @@ export const PRODUCTS_CATALOG: ProductItem[] = [
       'Dukungan Kertas Stiker Thermal & Kertas Roll Standar',
       'Integrasi Langsung dengan Katalog Produk EraStack',
     ],
-    primaryActionText: 'Pusat Unduhan',
-    primaryActionUrl: '/downloads',
-    detailUrl: '/downloads',
+    detailActionText: 'Buku Panduan',
+    detailUrl: '/docs',
+    primaryActionText: 'Unduh Label Master',
+    primaryActionUrl: '/downloads/ERASTACK_Label_Master.exe',
     badgeText: 'Tools',
   },
 ];

@@ -88,12 +88,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
         aria-label="Pencarian Cepat Menu & Panduan"
       >
         <div className="cmd-header">
-          <Search size={18} className="cmd-search-icon" />
+          <Search size={20} className="cmd-search-icon" />
           <input
             ref={inputRef}
             type="text"
             className="cmd-input"
-            placeholder="Ketik menu atau panduan toko (contoh: printer, diskon, download)..."
+            placeholder="Cari menu, kasir, atau panduan toko..."
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -102,14 +102,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
             onKeyDown={handleKeyDown}
             aria-autocomplete="list"
           />
-          <kbd className="cmd-esc-badge" onClick={handleClose}>ESC</kbd>
+          <button type="button" className="cmd-esc-btn" onClick={handleClose} aria-label="Tutup pencarian">
+            ESC
+          </button>
         </div>
 
         <div className="cmd-results" role="listbox">
           {filteredCommands.length === 0 ? (
             <div className="cmd-empty">
-              <p>Tidak ada hasil untuk "<strong>{query}</strong>"</p>
-              <span>Coba kata kunci lain seperti: printer, kasir, download, atau promo.</span>
+              <p>Tidak ada menu untuk "<strong>{query}</strong>"</p>
+              <span>Coba kata kunci lain seperti kasir, stok, unduhan, atau panduan.</span>
             </div>
           ) : (
             filteredCommands.map((cmd, idx) => (
@@ -125,21 +127,24 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
                 role="option"
                 aria-selected={idx === selectedIndex}
               >
-                <span className="cmd-item-icon">{cmd.icon}</span>
-                <div className="cmd-item-text">
+                <div className="cmd-item-icon-wrap">{cmd.icon}</div>
+                <div className="cmd-item-body">
                   <span className="cmd-item-title">{cmd.title}</span>
-                  <span className="cmd-item-cat">{cmd.category}</span>
+                  <span className="cmd-item-cat-badge">{cmd.category}</span>
                 </div>
-                <ArrowRight size={14} className="cmd-item-arrow" />
+                <ArrowRight size={16} className="cmd-item-arrow" />
               </button>
             ))
           )}
         </div>
 
         <div className="cmd-footer">
-          <span>Tekan <kbd>↑</kbd> <kbd>↓</kbd> untuk memilih</span>
-          <span>Tekan <kbd>↵</kbd> untuk membuka</span>
-          <span>Tekan <kbd>ESC</kbd> untuk menutup</span>
+          <div className="cmd-footer-hints">
+            <span><kbd>↑</kbd><kbd>↓</kbd> Pilih</span>
+            <span><kbd>↵</kbd> Buka</span>
+            <span><kbd>ESC</kbd> Tutup</span>
+          </div>
+          <span className="cmd-footer-brand">ERASTACK POS</span>
         </div>
       </div>
     </div>

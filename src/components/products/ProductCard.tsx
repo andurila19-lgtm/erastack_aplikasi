@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { 
   Monitor, Smartphone, Terminal, HardDrive, 
   ArrowRight, Download, CheckCircle2, ShieldCheck, 
-  Tag
+  Tag, Cpu
 } from 'lucide-react';
 import type { ProductItem } from '../../data/productsData';
 import { Badge } from '../ui/Badge';
@@ -51,7 +51,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
 
           <div className="product-badges-group">
             {product.badgeText && (
-              <Badge variant="lime" size="sm" dot>
+              <Badge variant="cyan" size="sm" dot>
                 {product.badgeText}
               </Badge>
             )}
@@ -70,8 +70,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
         <ul className="product-feature-list">
           {product.features.map((feat, idx) => (
             <li key={idx} className="feature-item">
-              <CheckCircle2 size={14} className="feature-check-icon" />
-              <span>{feat}</span>
+              <CheckCircle2 size={15} className="feature-check-icon" />
+              <span className="feature-text">{feat}</span>
             </li>
           ))}
         </ul>
@@ -79,29 +79,37 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
 
       <div className="product-specs-bar">
         <div className="spec-metric">
-          <span className="spec-metric-label">Ukuran:</span>
-          <span className="spec-metric-value">{product.size}</span>
+          <span className="spec-metric-label">Ukuran</span>
+          <strong className="spec-metric-value">{product.size}</strong>
         </div>
         <div className="spec-metric">
-          <span className="spec-metric-label">Arsitektur:</span>
-          <span className="spec-metric-value text-emerald">{product.architecture}</span>
+          <span className="spec-metric-label">Arsitektur</span>
+          <strong className="spec-metric-value text-brand">{product.architecture}</strong>
         </div>
         <div className="spec-metric">
-          <span className="spec-metric-label">Lisensi:</span>
-          <span className="spec-metric-value">{product.license}</span>
+          <span className="spec-metric-label">Lisensi</span>
+          <strong className="spec-metric-value">{product.license}</strong>
         </div>
       </div>
 
       <div className="product-card-footer">
-        <Link href={product.detailUrl} className="btn-detail-link">
-          <Button variant="secondary" size="md" rightIcon={<ArrowRight size={15} />}>
-            Lihat Keunggulan
+        <Link href={product.detailUrl} className="card-btn-link">
+          <Button variant="secondary" size="md" rightIcon={<ArrowRight size={14} />}>
+            {product.detailActionText || 'Lihat Panduan'}
           </Button>
         </Link>
 
         {product.primaryActionUrl && (
-          <Link href={product.primaryActionUrl} className="btn-download-link">
-            <Button variant="primary" size="md" leftIcon={<Download size={15} />}>
+          <Link 
+            href={product.primaryActionUrl} 
+            className="card-btn-link"
+            download={product.primaryActionUrl.endsWith('.exe') || product.primaryActionUrl.endsWith('.apk') ? true : undefined}
+          >
+            <Button 
+              variant="primary" 
+              size="md" 
+              leftIcon={product.primaryActionUrl.includes('ai-lab') ? <Cpu size={14} /> : <Download size={14} />}
+            >
               {product.primaryActionText || 'Unduh'}
             </Button>
           </Link>
