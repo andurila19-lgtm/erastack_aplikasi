@@ -176,10 +176,9 @@ export const WorkflowSection: React.FC = () => {
           <div className="workflow-card-right">
             <div className="workflow-terminal-mockup">
               <div className="terminal-topbar">
-                <span className="term-dot red" />
-                <span className="term-dot yellow" />
-                <span className="term-dot green" />
-                <span className="term-title">EraStack • Runtime Pipeline Inspector</span>
+                <div className="terminal-prompt-prefix">&gt;_</div>
+                <span className="term-title">EraStack Runtime Pipeline Inspector</span>
+                <span className="term-chip">v1.0.4 • Local</span>
               </div>
               <div className="terminal-body">
                 <div className="terminal-heading">

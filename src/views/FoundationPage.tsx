@@ -197,11 +197,7 @@ export const FoundationPage: React.FC = () => {
         <section className="console-section">
           <div className="console-window">
             <div className="console-top-bar">
-              <div className="console-window-dots">
-                <span className="dot red" />
-                <span className="dot yellow" />
-                <span className="dot green" />
-              </div>
+              <div className="console-cli-prefix">&gt;_</div>
               <div className="console-title-text">
                 <HardDrive size={13} className="console-title-icon" />
                 <span>ERASTACK ARCHITECTURE WORKBENCH & SIMULATOR</span>

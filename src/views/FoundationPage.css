@@ -147,21 +147,15 @@
   padding: 0 var(--space-4);
 }
 
-.console-window-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.console-cli-prefix {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand-primary);
+  background: rgba(0, 102, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
 }
-
-.console-window-dots .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.console-window-dots .red { background-color: #EF4444; }
-.console-window-dots .yellow { background-color: #F59E0B; }
-.console-window-dots .green { background-color: #10B981; }
 
 .console-title-text {
   display: flex;

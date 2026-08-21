@@ -118,10 +118,11 @@ export const BusinessSolutionsSection: React.FC = () => {
           <div className="spotlight-right">
             <div className="spotlight-mockup-box">
               <div className="mockup-header-bar">
-                <span className="mockup-dot red" />
-                <span className="mockup-dot yellow" />
-                <span className="mockup-dot green" />
+                <div className="mockup-header-icon-wrap">
+                  <Check size={14} className="text-brand" />
+                </div>
                 <span className="mockup-bar-title">{selectedSolution.name} • Alur Kerja</span>
+                <span className="mockup-badge-pill">Pipeline Aktif</span>
               </div>
               <div className="mockup-content-body">
                 <div className="workflow-step">
